@@ -30,6 +30,10 @@ public class UserService {
         return null;
     }
 
+    public boolean checkUserByUsername(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
+
     public int createUser(User user) {
         if (getUserByUserName(user.getUsername(), user.getUserPassword())==null)
         {

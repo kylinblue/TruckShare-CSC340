@@ -6,10 +6,8 @@ import com.csc340.truckshare.webapp.services.ListingService;
 import com.csc340.truckshare.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -18,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
     ListingService listingService;
+    @Autowired
     ConvService conversationService;
 
     @GetMapping("/login") // the login page
@@ -31,28 +31,37 @@ public class UserController {
         return "user-signup";
     }
 
-    @PostMapping("/auth")
-    public String createUser(@RequestBody User user, @RequestBody boolean register, RedirectAttributes redirectAttributes) {
-        if(register){
-            if (userService.createUser(user)==-1){
-                return "user-exists";
-            }
-            else {
-                redirectAttributes.addAttribute("userId", user.getUserId());
-                return "redirect:/user/{userId}";
-            }
+    @PostMapping("/create")
+    public String createUser(@RequestBody User user) {
+        // User: isAdmin? userPassword? username? firstName? lastName?
+        if (userService.checkUserByUsername(user.getUsername())){
+            return "user-exists";
         }
-        else{
-            int auth = userService.authUser(user.getUserId(), user.getUsername());
-            if (auth == 0) {
-                return "user-doesnt-exist"; // fixme fix these redirects
-            }
-            else if (auth == -1){
-                return "wrong-password";
-            }
+        else {
+            return "redirect:/user/" + createUser(user);
+        }
+    }
+
+    @PostMapping("/auth")
+    public String authUser(@RequestBody User user, RedirectAttributes redirectAttributes) {
+        int auth = userService.authUser(user.getUserId(), user.getUsername());
+        if (auth == 0) {
+            return "user-doesnt-exist"; // fixme fix these redirects
+        }
+        else if (auth == -1){
+            return "wrong-password";
+        }
+        else {
             redirectAttributes.addAttribute("userId", user.getUserId());
             return "redirect:/user/{userId}";
         }
+    }
+
+    @GetMapping("/{userId}")
+    public String userPage(@PathVariable int userId, Model model) {
+        model.addAttribute("user", userService.getUserByUserId(userId));
+        model.addAttribute("listingList", listingService.queryByUserId(userId));
+        return "user";
     }
 
     /*@PostMapping("/auth")

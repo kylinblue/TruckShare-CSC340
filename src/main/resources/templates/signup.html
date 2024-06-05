@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -30,9 +30,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="login.html">Login</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="signup.html">Signup</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="user.html">Listings</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/login">Login</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/signup">Sign Up</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/listing/all">Listings</a></li>
             </ul>
         </div>
     </div>
@@ -53,42 +53,43 @@
                 <div class="col-lg-6 mb-5 mb-lg-0 mt-5">
                     <div class="card mt-5">
                         <div class="card-body py-5 px-md-5 mt-5">
-                            <form>
+                            <!-- fix the form -->
+                            <form th:action="/user/create" method="POST">
                                 <!-- 2 column grid layout with text inputs for the first and last names -->
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="form3Example1" class="form-control" />
-                                            <label class="form-label" for="form3Example1">First name</label>
+                                            <input type="text" id="firstName" class="form-control" />
+                                            <label class="form-label" for="firstName">First name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="form3Example2" class="form-control" />
-                                            <label class="form-label" for="form3Example2">Last name</label>
+                                            <input type="text" id="lastName" class="form-control" />
+                                            <label class="form-label" for="lastName">Last name</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Email input -->
+                                <!-- Username input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="email" id="form3Example3" class="form-control" />
-                                    <label class="form-label" for="form3Example3">Email address</label>
+                                    <input type="username" id="username" class="form-control" />
+                                    <label class="form-label" for="username">Username</label>
                                 </div>
 
                                 <!-- Password input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" id="form3Example4" class="form-control" />
-                                    <label class="form-label" for="form3Example4">Password</label>
+                                    <input type="password" id="password" class="form-control" />
+                                    <label class="form-label" for="password">Password</label>
                                 </div>
 
-                                <!-- Checkbox -->
+                                <!-- Checkbox
                                 <div class="form-check d-flex justify-content-center mb-4">
                                     <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
                                     <label class="form-check-label" for="form2Example33">
                                         Subscribe to our newsletter
                                     </label>
-                                </div>
+                                </div> -->
 
                                 <!-- Submit button -->
                                 <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">

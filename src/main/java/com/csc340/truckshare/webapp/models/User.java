@@ -17,6 +17,9 @@ public class User {
 
     private String userPassword;
 
+    private String firstName;
+    private String lastName;
+
     public User() {}
 
     public User(int userId, boolean isAdmin, boolean isBanned,
@@ -26,6 +29,8 @@ public class User {
         this.isBanned = isBanned;
         this.userPassword = userPassword;
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public int getUserId() {
@@ -63,6 +68,38 @@ public class User {
 
     public String getUserPassword() {
         return userPassword;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     // password hash, to be implemented
