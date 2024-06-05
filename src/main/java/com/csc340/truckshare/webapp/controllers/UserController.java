@@ -32,20 +32,27 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public String createUser(@RequestBody User user, @RequestBody int register, RedirectAttributes redirectAttributes) {
-        if (register==1) {
+    public String createUser(@RequestBody User user, @RequestBody boolean register, RedirectAttributes redirectAttributes) {
+        if(register){
             if (userService.createUser(user)==-1){
                 return "user-exists";
             }
+            else {
+                redirectAttributes.addAttribute("userId", user.getUserId());
+                return "redirect:/user/{userId}";
+            }
+        }
+        else{
+            int auth = userService.authUser(user.getUserId(), user.getUsername());
+            if (auth == 0) {
+                return "user-doesnt-exist"; // fixme fix these redirects
+            }
+            else if (auth == -1){
+                return "wrong-password";
+            }
             redirectAttributes.addAttribute("userId", user.getUserId());
-            userService.createUser(user);
             return "redirect:/user/{userId}";
         }
-        int givenUserId = userService.
-                getUserByUserName(user.getUsername(), user.getUserPassword()).
-                getUserId();
-        redirectAttributes.addAttribute("userId", givenUserId);
-        return "redirect:/user/{userId}";
     }
 
     /*@PostMapping("/auth")

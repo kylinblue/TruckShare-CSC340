@@ -20,6 +20,10 @@ public class ListingService {
         return listingRepository.findAll();
     }
 
+    public Listing getListingById(int listingId) {
+        return listingRepository.findById(listingId).orElse(null);
+    }
+
     public List<Listing> queryByUserId(int userId){
         return listingRepository.queryByUserId(userId);
     }

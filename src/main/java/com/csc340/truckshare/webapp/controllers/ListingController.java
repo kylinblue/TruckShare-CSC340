@@ -1,15 +1,14 @@
 package com.csc340.truckshare.webapp.controllers;
 
 import com.csc340.truckshare.webapp.models.Listing;
+import com.csc340.truckshare.webapp.repositories.ListingRepository;
 import com.csc340.truckshare.webapp.services.ConvService;
 import com.csc340.truckshare.webapp.services.ListingService;
 import com.csc340.truckshare.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,16 +27,19 @@ public class ListingController {
     ConvService conversationService;
 
     @GetMapping("/all")
-    public List<Listing> getAllListings(){
+    public String getAllListingForUser(Model model) {
+        model.addAttribute("allListing", listingService.getAllListings());
+        return "all-listings";
+    }
+    /*public List<Listing> getAllListings(){
         return listingService.getAllListings();
     }
-    /* public String getAllListings(Model model){
+    public String getAllListings(Model model){
     model.addAttribute("allListings", listingService.getAllListings());
-    return "all-Listings";
-    }
-     */
+    return "all-listings";
+    }*/
 
-    @GetMapping("/userid/{userid}")
+    @GetMapping("/userid/{userId}")
     public List<Listing> findListingByUserId(@PathVariable int userId){
         return listingService.queryByUserId(userId);
     }
@@ -45,12 +47,22 @@ public class ListingController {
         return "find-Listing-By-User-Id";
     }*/
 
+    @GetMapping("/listing-id/{listingId}")
+    public String findListingById(@PathVariable int listingId, Model model) {
+        model.addAttribute("listing", listingService.getListingById(listingId));
+        return "listing-detail";
+    }
+
     @PostMapping("/create")
-    public String createListing(Listing listing, int userId){
+    public String createListing(@RequestBody Listing listing){ //userId passed by front end
+        listingService.createListing(listing);
+        return "redirect:/listing/listing-id/" + listing.getListingId();
+    }
+    /*public String createListing(Listing listing, int userId){
         listing.setUserId(userId);
         listingService.createListing(listing);
         return "listing-created";
-    }
+    }*/
     /*public RedirectView createListing(Listing listing, RedirectAttributes attributes) {
         listingService.createListing(listing);
         attributes.addFlashAttribute("message", "Listing created successfully!");
@@ -61,7 +73,7 @@ public class ListingController {
     @PostMapping("/update")
     public String updateListing(Listing listing){
         listingService.updateListing(listing);
-        return "listing-updated";
+        return "redirect:/listing/listing-id/" + listing.getListingId();
     }
     /*public RedirectView updateListing(@RequestParam("listingId") int id, Listing listing, RedirectAttributes attributes) {
         listingService.updateListing(listing);
@@ -70,10 +82,10 @@ public class ListingController {
                                                              //fix address!!
     }*/
 
-    @PostMapping("/delete")
-    public String deleteListing(int id){
+    @GetMapping("/delete/{id}")
+    public String deleteListing(@PathVariable int id){
         listingService.deleteListing(id);
-        return "listing-deleted";
+        return "redirect:/listing/all";
     }
     /*public RedirectView deleteListing(@RequestParam("listingId") int id, RedirectAttributes attributes) {
         listingService.deleteListing(id);

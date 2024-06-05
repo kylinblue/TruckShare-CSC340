@@ -39,6 +39,18 @@ public class UserService {
         else return -1;
     }
 
+    public int authUser(int userId, String password) {
+        // 0 user doesn't exist, 1 authenticated, -1 wrong password
+        if (userRepository.existsById(userId)){
+            if (userRepository.findById(userId).orElse(null).
+                    getUserPassword().equals(password)){
+                return 1;
+            }
+            else return -1;
+        }
+        else return 0;
+    }
+
     public User getUserByUserId(int userId) {
         return userRepository.findById(userId).orElse(null);
     }
