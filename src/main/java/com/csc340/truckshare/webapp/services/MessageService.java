@@ -16,7 +16,6 @@ public class MessageService {
 
     public List<Message> getMsgForConv(int convId) {
         return messageRepository.queryMsgByConvId(convId);
-
     }
 
     public void createMessage(Message message) {

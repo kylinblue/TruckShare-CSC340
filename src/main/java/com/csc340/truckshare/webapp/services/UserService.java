@@ -1,5 +1,6 @@
 package com.csc340.truckshare.webapp.services;
 
+import com.csc340.truckshare.webapp.models.Conv;
 import com.csc340.truckshare.webapp.models.Listing;
 import com.csc340.truckshare.webapp.models.User;
 import com.csc340.truckshare.webapp.repositories.ConvRepository;
@@ -21,6 +22,7 @@ public class UserService {
 
     public User getUserByUserName(String username, String password) {
         User user = userRepository.findByUsername(username);
+        // fixme
         // Need to implement password hash, currently plain text
         if (user.getUserPassword().equals(password)) {
             return user;
@@ -28,13 +30,13 @@ public class UserService {
         return null;
     }
 
-    public void createUser(User user) {
-        /*if (getUserByUserName(user.getUsername(), user.getUserPassword())==null)
+    public int createUser(User user) {
+        if (getUserByUserName(user.getUsername(), user.getUserPassword())==null)
         {
-
+            userRepository.save(user);
+            return user.getUserId();
         }
-        else return -1;*/
-        userRepository.save(user);
+        else return -1;
     }
 
     public User getUserByUserId(int userId) {
@@ -46,6 +48,10 @@ public class UserService {
             List<Listing> listingToDelete = listingRepository.queryByUserId(userId);
             for (Listing listing : listingToDelete) {
                 listingRepository.deleteById(listing.getListingId());
+            }
+            List<Conv> convsToDelete = convRepository.queryByUserId(userId);
+            for (Conv conv : convsToDelete) {
+                convRepository.deleteById(conv.getConvId());
             }
         }
         userRepository.deleteById(userId);

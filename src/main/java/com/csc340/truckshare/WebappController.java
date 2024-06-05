@@ -8,6 +8,6 @@ public class WebappController {
 
     @GetMapping({"", "/", "/home", "/index"})
     public String home(){
-        return "redirect:/"; // fixme
+        return "index"; // fixme
     }
 }

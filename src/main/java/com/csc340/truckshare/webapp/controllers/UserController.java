@@ -31,17 +31,24 @@ public class UserController {
         return "user-signup";
     }
 
-    @PostMapping("/signup-credentials")
-    public String createUser(@RequestBody User user, RedirectAttributes redirectAttributes) {
-        /*if (userService.createUser(user)==-1){
-            return "user-exists";
-        }*/
+    @PostMapping("/auth")
+    public String createUser(@RequestBody User user, @RequestBody int register, RedirectAttributes redirectAttributes) {
+        if (register==1) {
+            if (userService.createUser(user)==-1){
+                return "user-exists";
+            }
             redirectAttributes.addAttribute("userId", user.getUserId());
-        userService.createUser(user);
+            userService.createUser(user);
             return "redirect:/user/{userId}";
+        }
+        int givenUserId = userService.
+                getUserByUserName(user.getUsername(), user.getUserPassword()).
+                getUserId();
+        redirectAttributes.addAttribute("userId", givenUserId);
+        return "redirect:/user/{userId}";
     }
 
-    @PostMapping("/auth")
+    /*@PostMapping("/auth")
     public String userAuth(String username, String password){
         User user = userService.getUserByUserName(username, password);
         if (user == null)
@@ -52,8 +59,8 @@ public class UserController {
             return "admin-home";
         }
         else return "user-home";
-    }
+    }*/
 
     @GetMapping("/logout")
-    public String userLogout(){ return "user-login"; }
+    public String userLogout(){ return "redirect:/"; }
 }

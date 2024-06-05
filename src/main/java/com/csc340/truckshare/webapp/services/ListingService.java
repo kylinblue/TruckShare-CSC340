@@ -35,5 +35,4 @@ public class ListingService {
     public void deleteListing(int id) {
         listingRepository.deleteById(id);
     }
-
 }
