@@ -3,36 +3,37 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "listing")
-
+@Entity // Specifies that the class is an entity and is mapped to a database table
+@Table(name = "listing") // Specifies the name of the database table to be used for mapping
 public class Listing {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int listingId;
 
-    private int userId;
+    @Id   // Specifies the primary key of an entity
+    @GeneratedValue(strategy = GenerationType.AUTO) // Provides the specification of generation strategies for the primary keys
+    private int listingId; // Unique identifier for each listing
 
-    private String title;
+    private int userId; // Identifier for the user associated with this listing
 
-    private String details;
+    private String title; // Title of the listing
 
-    @Temporal(TemporalType.DATE)
-    private Date targetDate;
+    private String details; // Detailed description of the listing
 
-    private String status;
+    @Temporal(TemporalType.DATE) // Specifies that the date should be stored in a specific temporal type (DATE)
+    private Date targetDate; // Target date for the listing
 
+    private String status; // Current status of the listing (e.g., active, inactive)
+
+    // Default constructor
     public Listing() {
     }
 
+    // Parameterized constructor to initialize all fields
     public Listing(int listingId, int userId, String title, String details, Date targetDate, String status) {
-        this.listingId = listingId;
-        this.userId = userId;
-        this.title = title;
-        this.details = details;
-        this.targetDate = targetDate;
-        this.status = status;
-
+        this.listingId = listingId; // Sets the listingId
+        this.userId = userId; // Sets the userId
+        this.title = title; // Sets the title
+        this.details = details; // Sets the details
+        this.targetDate = targetDate; // Sets the targetDate
+        this.status = status; // Sets the status
     }
 
     public int getListingId() {
