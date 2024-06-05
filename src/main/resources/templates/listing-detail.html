@@ -25,6 +25,19 @@
             margin-bottom: 20px;
             color: #343a40;
         }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .title {
+            font-size: 2em;
+            color: #343a40;
+        }
+        .listing-id {
+            font-size: 1.2em;
+            color: #6c757d;
+        }
         p {
             font-size: 1.1em;
             color: #495057;
@@ -37,6 +50,22 @@
             background-color: #0056b3;
             border-color: #004085;
         }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #e9ecef;
+            border: 2px dashed #6c757d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #6c757d;
+            font-size: 1.5em;
+        }
     </style>
 </head>
 <body>
@@ -44,9 +73,20 @@
     <h1>Listing Details</h1>
 </div>
 <div class="container">
-    <p><strong>Listing ID:</strong> <span th:text="${listing.listingId}"></span></p>
+    <div class="header">
+        <div class="title">
+            <span th:text="${listing.title}"></span>
+        </div>
+        <div class="listing-id">
+            <strong>Listing ID:</strong> <span th:text="${listing.listingId}"></span>
+        </div>
+    </div>
+    <div class="image-container">
+        <div class="image-placeholder">
+            Image Placeholder
+        </div>
+    </div>
     <p><strong>User ID:</strong> <span th:text="${listing.userId}"></span></p>
-    <p><strong>Title:</strong> <span th:text="${listing.title}"></span></p>
     <p><strong>Details:</strong> <span th:text="${listing.details}"></span></p>
     <p><strong>Target Date:</strong> <span th:text="${listing.targetDate}"></span></p>
     <p><strong>Status:</strong> <span th:text="${listing.status}"></span></p>
