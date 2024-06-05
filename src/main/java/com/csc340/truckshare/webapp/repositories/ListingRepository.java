@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ListingRepository
         extends JpaRepository <Listing, Integer> {
-        @Query(value = "select * from listing where userId =?1", nativeQuery = true)
+        @Query(value = "select * from listing where user_Id =?1", nativeQuery = true)
         List<Listing> queryByUserId(int userId);
 }

@@ -38,7 +38,7 @@ public class UserController {
             return "user-exists";
         }
         else {
-            return "redirect:/user/" + createUser(user);
+            return "redirect:/user/user-id/" + userService.createUser(user);
         }
     }
 
@@ -57,7 +57,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user-id/{userId}")
     public String userPage(@PathVariable int userId, Model model) {
         model.addAttribute("user", userService.getUserByUserId(userId));
         model.addAttribute("listingList", listingService.queryByUserId(userId));

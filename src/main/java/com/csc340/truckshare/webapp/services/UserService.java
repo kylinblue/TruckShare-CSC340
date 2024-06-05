@@ -35,12 +35,8 @@ public class UserService {
     }
 
     public int createUser(User user) {
-        if (getUserByUserName(user.getUsername(), user.getUserPassword())==null)
-        {
-            userRepository.save(user);
-            return user.getUserId();
-        }
-        else return -1;
+        userRepository.save(user);
+        return user.getUserId();
     }
 
     public int authUser(int userId, String password) {
