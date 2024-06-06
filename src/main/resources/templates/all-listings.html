@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -136,32 +136,22 @@
         <div class="col-sm-8">
             <!-- Example Card Layout for Listings -->
             <div class="card mb-3">
-                <div class="row g-0">
+                <div data-th-each="listing: ${listingList}" class="row g-0">
                     <div class="col-md-4">
                         <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Listing Image">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">Listing ID: 1</h5>
-                            <p class="card-text">User ID: 101</p>
-                            <p class="card-text"></p>
-                            <p class="card-text">Details:</p>
-                            <p class="card-text">Target Date: </p>
-                            <p class="card-text">Status: Available</p>
-                            <a href="/listing/listing-id/1" class="btn btn-primary">View Details</a>
-                            <a href="/listing/listing-id/1" class="btn btn-primary">Message Provider</a>
+                            <h5 class="card-title" data-th-text="${listing.title}"></h5>
+                            <p class="card-text" data-th-text="${listing.details}"></p>
+                            <p class="card-text" data-th-text="${listing.status}"></p>
+                            <a data-th-href="@{/listing/listing-id/{listingId}(listingId=${listing.listingId})}" class="btn btn-primary">View Details</a>
+                            <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/conv/user-id/' + ${user.userId} + '/target/' + ${listing.listingId}}" class="btn btn-primary">Message The Provider</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Repeat similar card layout for each listing -->
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Listing Image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Listing ID: 2</h5>
-                            <p class="card
+        </div>
+    </div>
+</div>
+</body>

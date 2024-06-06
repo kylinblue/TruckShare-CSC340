@@ -32,10 +32,11 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String createUser(@RequestBody User user) {
+    public String createUser(@RequestBody User user, Model model) {
         // User: isAdmin? userPassword? username? firstName? lastName?
         if (userService.checkUserByUsername(user.getUsername())){
-            return "user-exists";
+            model.addAttribute("response", "User exists");
+            return "user-signup";
         }
         else {
             return "redirect:/user/user-id/" + userService.createUser(user);
@@ -43,8 +44,16 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public String authUser(@RequestBody User user, RedirectAttributes redirectAttributes) {
-        int auth = userService.authUser(user.getUserId(), user.getUsername());
+    public String authUser(@RequestBody User user, Model model) {
+        User userInit = userService.getUserByUserName(user.getUsername(), user.getUserPassword());
+        if (userInit!=null) {
+            return "redirect:/user/user-id/" + userInit.getUserPassword();
+        }
+        else {
+            model.addAttribute("response", "Wrong password");
+            return "user-login";
+        }
+        /*int auth = userService.authUser(user.getUserId(), user.getUsername());
         if (auth == 0) {
             return "user-doesnt-exist"; // fixme fix these redirects
         }
@@ -54,14 +63,14 @@ public class UserController {
         else {
             redirectAttributes.addAttribute("userId", user.getUserId());
             return "redirect:/user/{userId}";
-        }
+        }*/
     }
 
     @GetMapping("/user-id/{userId}")
     public String userPage(@PathVariable int userId, Model model) {
         model.addAttribute("user", userService.getUserByUserId(userId));
-        model.addAttribute("listingList", listingService.queryByUserId(userId));
-        return "user";
+        model.addAttribute("listingList", listingService.getAllListings());
+        return "all-listings";
     }
 
     /*@PostMapping("/auth")

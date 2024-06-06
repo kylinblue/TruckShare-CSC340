@@ -19,8 +19,22 @@ public class ConvService {
     ListingRepository listingRepository;
     UserRepository userRepository;
 
-    public List<Conv> getConvByUserId(int userId){
-        return convRepository.queryByUserId(userId);
+    public Conv getConvByUserId(int sourceUserId, int targetUserId){
+        if (sourceUserId>targetUserId)
+        {
+            int temp = sourceUserId;
+            sourceUserId = targetUserId;
+            targetUserId = temp;
+        }
+        else {
+            List<Conv> convBySource = convRepository.queryBySourceUserId(sourceUserId);
+            for (Conv conv : convBySource) {
+                if(conv.getTargetUserId() == targetUserId){
+                    return conv;
+                }
+            }
+        }
+        return null;
     }
 
     public Conv getConvById(int convId) {

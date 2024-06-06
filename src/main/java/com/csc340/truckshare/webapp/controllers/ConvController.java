@@ -6,7 +6,9 @@ import com.csc340.truckshare.webapp.services.ListingService;
 import com.csc340.truckshare.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,9 +44,10 @@ public class ConvController {
         return new RedirectView("/webapp/user/userid/");
     }*/
 
-    @GetMapping("/userid/{userid}")
-    public List<Conv> getConvByUserId(int id){
-        return convService.getConvByUserId(id);
+    @GetMapping("/user-id/{userid}/target/{userid2}")
+    public String getConvByUserId(@PathVariable int userid, @PathVariable int userid2, Model model){
+        model.addAttribute("conv", convService.getConvByUserId(userid, userid2));
+        return "conversation";
     }
 
     @GetMapping("/convid/{convid}")

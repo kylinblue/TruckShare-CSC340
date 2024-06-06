@@ -39,11 +39,11 @@ public class ListingController {
     return "all-listings";
     }*/
 
-    @GetMapping("/userid/{userId}")
+    /*@GetMapping("/userid/{userId}") // replaced by userController.userPage
     public List<Listing> findListingByUserId(@PathVariable int userId){
         return listingService.queryByUserId(userId);
     }
-    /* public String findListingByUserId(){
+     public String findListingByUserId(){
         return "find-Listing-By-User-Id";
     }*/
 

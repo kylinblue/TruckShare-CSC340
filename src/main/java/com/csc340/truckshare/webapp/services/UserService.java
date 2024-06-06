@@ -55,7 +55,7 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-    public void deleteUserById(int userId) {
+    /*public void deleteUserById(int userId) {
         if (this.listingRepository != null) {
             List<Listing> listingToDelete = listingRepository.queryByUserId(userId);
             for (Listing listing : listingToDelete) {
@@ -67,5 +67,5 @@ public class UserService {
             }
         }
         userRepository.deleteById(userId);
-    }
+    }*/
 }

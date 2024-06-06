@@ -11,7 +11,8 @@ public class Conv {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int convId;
 
-    private int userId;
+    private int sourceUserId;
+    private int targetUserId;
 
     private String title;
 
@@ -23,7 +24,8 @@ public class Conv {
     public Conv(int convId, int userId,
                 String title, Boolean supportNeeded) {
         this.convId = convId;
-        this.userId = userId;
+        this.sourceUserId = userId;
+        this.targetUserId = targetUserId;
         this.title = title;
         this.supportNeeded = supportNeeded;
     }
@@ -36,14 +38,21 @@ public class Conv {
         this.convId = convId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getSourceUserId() {
+        return sourceUserId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setSourceUserId(int sourceUserId) {
+        this.sourceUserId = sourceUserId;
     }
 
+    public int getTargetUserId() {
+        return targetUserId;
+    }
+
+    public void setTargetUserId(int targetUserId) {
+        this.targetUserId = targetUserId;
+    }
 
     public String getTitle() {
         return title;
