@@ -53,6 +53,12 @@ public class ListingController {
         return "listing-detail";
     }
 
+    @GetMapping("/user-id/{id}")
+    public String findListingByUserId(@PathVariable int id, Model model){
+        model.addAttribute("listings", listingService.getListingByUserId(id));
+        return "user-listings";
+    }
+
     @PostMapping("/create")
     public String createListing(@RequestBody Listing listing){ //userId passed by front end
         listingService.createListing(listing);

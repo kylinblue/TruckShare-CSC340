@@ -24,6 +24,10 @@ public class ListingService {
         return listingRepository.findById(listingId).orElse(null);
     }
 
+    public List<Listing> getListingByUserId(int id) {
+        return listingRepository.queryByUserId(id);
+    }
+
     public List<Listing> queryByUserId(int userId){
         return listingRepository.queryByUserId(userId);
     }

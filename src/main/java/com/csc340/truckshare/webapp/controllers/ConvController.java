@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 
 @Controller
 @RequestMapping("/conv")
@@ -46,8 +44,14 @@ public class ConvController {
 
     @GetMapping("/user-id/{userid}/target/{userid2}")
     public String getConvByUserId(@PathVariable int userid, @PathVariable int userid2, Model model){
-        model.addAttribute("conv", convService.getConvByUserId(userid, userid2));
+        model.addAttribute("conv", convService.getConvByUserIdPair(userid, userid2));
         return "conversation";
+    }
+
+    @GetMapping("/user-id/{userid}")
+    public String getListOfConv(@PathVariable int userid, Model model){
+        model.addAttribute("convList", convService.getConvByUserId(userid));
+        return "user-conv";
     }
 
     @GetMapping("/convid/{convid}")
