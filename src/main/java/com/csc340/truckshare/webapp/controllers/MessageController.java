@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/msg")
+@RequestMapping("/msg") // Base URL for all methods in this controller
 
 public class MessageController {
     @Autowired
@@ -22,14 +22,16 @@ public class MessageController {
     @Autowired
     MessageService messageService;
 
+    // Endpoint to send a message
     @PostMapping("/send")
     public String sendMessage (Message message) {
-        messageService.createMessage(message);
-        return "message-sent";
+        messageService.createMessage(message); // Create a new message
+        return "message-sent"; // Return the view name
     }
 
+    // Endpoint to get messages for a specific conversation ID
     @PostMapping("/getmessage")
     public List<Message> getMessage (int convId) {
         return messageService.getMsgForConv(convId);
-    }
+    }// Return list of messages for the conversation ID
 }

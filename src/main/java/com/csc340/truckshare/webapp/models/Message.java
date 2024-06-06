@@ -7,18 +7,20 @@ import jakarta.persistence.*;
 
 public class Message {
 
+    // Primary key annotation, with auto-generated value
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int msgId;
 
-    private int originUserId;
-    private int destinationUserId;
+    private int originUserId; // ID of the user who sent the message
+    private int destinationUserId;// ID of the user who is the recipient of the message
 
-    private String payload;
-    //private timestamp??
+    private String payload; // The content of the message
 
+    // Default constructor
     public Message(){}
 
+    // Parameterized constructor
     public Message(int msgId, int originUserId, int destinationUserId, String payload) {
         this.msgId = msgId;
         this.originUserId = originUserId;
