@@ -1,6 +1,7 @@
 package com.csc340.truckshare.webapp.services;
 
 import com.csc340.truckshare.webapp.models.Listing;
+import com.csc340.truckshare.webapp.models.User;
 import com.csc340.truckshare.webapp.repositories.ConvRepository;
 import com.csc340.truckshare.webapp.repositories.ListingRepository;
 import com.csc340.truckshare.webapp.repositories.UserRepository;
@@ -18,6 +19,8 @@ public class ListingService {
     // UserRepository and ConvRepository are declared
     UserRepository userRepository;
     ConvRepository convRepository;
+
+    UserService userService;
 
     /**
      * Fetches all listings from the repository.

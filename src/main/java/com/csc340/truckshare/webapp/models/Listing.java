@@ -13,6 +13,8 @@ public class Listing {
 
     private int userId; // Identifier for the user associated with this listing
 
+    private String username;
+
     private String title; // Title of the listing
 
     private String details; // Detailed description of the listing
@@ -32,6 +34,7 @@ public class Listing {
     public Listing(int listingId, int userId, String title, String details, Date targetDate, String status) {
         this.listingId = listingId; // Sets the listingId
         this.userId = userId; // Sets the userId
+        this.username = username;
         this.title = title; // Sets the title
         this.details = details; // Sets the details
         this.targetDate = targetDate; // Sets the targetDate
@@ -49,6 +52,14 @@ public class Listing {
 
     public int getUserId() {
         return userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setUserId(int userId) {

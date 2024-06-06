@@ -29,11 +29,11 @@ public class ListingController {
     @Autowired
     ConvService conversationService;
 
-    @GetMapping("/all")
+    /*@GetMapping("/all")
     public String getAllListingForUser(Model model) {
         model.addAttribute("allListing", listingService.getAllListings());
         return "all-listings";
-    }
+    }*/
 
 
     @GetMapping("/userid/{userId}")
@@ -45,20 +45,26 @@ public class ListingController {
     @GetMapping("/listing-id/{listingId}/user-id/{userId}")
     public String findListingById(@PathVariable int listingId, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(listingId));
-        model.addAttribute("userAttr", userService.getUserByUserId(userId));
+        model.addAttribute("user", userService.getUserByUserId(userId));
         return "listing-detail";
     }
 
     @GetMapping("/user-id/{id}")
     public String findListingByUserId(@PathVariable int id, Model model){
         model.addAttribute("listings", listingService.queryByUserId(id));
+        model.addAttribute("user", userService.getUserByUserId(id));
         return "user-listings";
+    }
+
+    @GetMapping("/get-username/{id}")
+    public String getUsername(@PathVariable int id) {
+        return userService.getUserByUserId(id).getUsername();
     }
 
     @PostMapping("/create")
     public String createListing(@RequestBody Listing listing){ //userId passed by front end
         listingService.createListing(listing);
-        return "redirect:/listing/listing-id/" + listing.getListingId();
+        return "redirect:/listing/listing-id/" + listing.getListingId() + "/user-id/" + listing.getUserId();
     }
 
     @PostMapping("/uploadImage")
