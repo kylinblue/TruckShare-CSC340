@@ -16,22 +16,23 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/conv")
+@RequestMapping("/conv") // Base URL for all methods in this controller
 
 
 public class ConvController {
     @Autowired
-    UserService userService;
-    ListingService listingService;
-    ConvService convService;
+    UserService userService; // Autowired dependency for UserService
+    ListingService listingService;  // Autowired dependency for ListingService
+    ConvService convService; // Autowired dependency for ConvService
 
-
+    // Method to create a new conversation
     @GetMapping("/new")
     public String createConv(Conv conversation) {
         convService.saveConv(conversation);
         return "message-created";
     }
 
+    // Method to update an existing conversation
     @GetMapping("/update")
     public String updateConv(Conv conversation) {
         convService.saveConv(conversation);
@@ -44,17 +45,20 @@ public class ConvController {
         return new RedirectView("/webapp/user/userid/");
     }*/
 
+    // Method to get all conversations by user ID
     @GetMapping("/user-id/{userid}/target/{userid2}")
     public String getConvByUserId(@PathVariable int userid, @PathVariable int userid2, Model model){
         model.addAttribute("conv", convService.getConvByUserId(userid, userid2));
         return "conversation";
     }
 
+    // Method to get a conversation by its ID
     @GetMapping("/convid/{convid}")
     public Conv getConvById(int id) {
         return convService.getConvById(id);
     }
 
+    // Method to delete a conversation
     @PostMapping("/delete")
     public String deleteConv(int id) {
         convService.deleteConv(id);
