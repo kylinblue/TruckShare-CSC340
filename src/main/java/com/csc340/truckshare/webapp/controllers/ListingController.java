@@ -6,9 +6,12 @@ import com.csc340.truckshare.webapp.services.ConvService;
 import com.csc340.truckshare.webapp.services.ListingService;
 import com.csc340.truckshare.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,7 +50,7 @@ public class ListingController {
 
     @GetMapping("/user-id/{id}")
     public String findListingByUserId(@PathVariable int id, Model model){
-        model.addAttribute("listings", listingService.getListingByUserId(id));
+        model.addAttribute("listings", listingService.queryByUserId(id));
         return "user-listings";
     }
 
@@ -55,6 +58,18 @@ public class ListingController {
     public String createListing(@RequestBody Listing listing){ //userId passed by front end
         listingService.createListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId();
+    }
+
+    @PostMapping("/uploadImage")
+    public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image, @RequestParam("listingId") int listingId) {
+        try {
+            Listing listing = listingService.getListingById(listingId);
+            listing.setImage(image.getBytes());
+            listingService.updateListing(listing);
+            return ResponseEntity.ok("Image uploaded successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed: " + e.getMessage());
+        }
     }
 
     @PostMapping("/update")

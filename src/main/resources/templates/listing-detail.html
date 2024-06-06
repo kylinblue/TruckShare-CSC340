@@ -83,7 +83,7 @@
     </div>
     <div class="image-container">
         <div class="image-placeholder">
-            Image Placeholder
+            <img th:src="@{'data:image/jpeg;base64,' + ${T(org.apache.tomcat.util.codec.binary.Base64).encodeBase64String(listing.image)}}" alt="Listing Image">
         </div>
     </div>
     <p><strong>User ID:</strong> <span th:text="${listing.userId}"></span></p>

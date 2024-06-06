@@ -22,6 +22,8 @@ public class Listing {
 
     private String status; // Current status of the listing (e.g., active, inactive)
 
+    private byte[] image ;
+
     // Default constructor
     public Listing() {
     }
@@ -34,6 +36,7 @@ public class Listing {
         this.details = details; // Sets the details
         this.targetDate = targetDate; // Sets the targetDate
         this.status = status; // Sets the status
+        this.image = image;
     }
 
     public int getListingId() {
@@ -84,5 +87,13 @@ public class Listing {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
