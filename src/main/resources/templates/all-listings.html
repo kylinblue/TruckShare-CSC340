@@ -60,7 +60,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:object="${user}" th:unless="${user} == null" th:href="@{'/conv/user-id/' + ${user.userId}}">My Listings</a></li>
+                       th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/user-id/' + ${user.userId}}">My Listings</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
                        th:object="${user}" th:unless="${user} == null" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
@@ -140,7 +140,7 @@
         <div class="col-sm-8">
             <!-- Example Card Layout for Listings -->
             <div class="card mb-3">
-                <div data-th-each="listing: ${listingList}" class="row g-0">
+                <div data-th-each="listing: ${listingList}" class="row g-0 p-1">
                     <div class="col-md-4">
                         <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Listing Image">
                     </div>
@@ -149,7 +149,8 @@
                             <h5 class="card-title" data-th-text="${listing.title}"></h5>
                             <p class="card-text" data-th-text="${listing.details}"></p>
                             <p class="card-text" data-th-text="${listing.status}"></p>
-                            <a data-th-href="@{/listing/listing-id/{listingId}(listingId=${listing.listingId})}" class="btn btn-primary">View Details</a>
+                            <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}" class="btn btn-primary">View Details</a>
+                            <a th:object="${user}" th:if="${user} == null" data-th-href="@{'/listing/listing-id/'+ ${listing.listingId} + '/user-id/0'}" class="btn btn-primary">View Details</a>
                             <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/conv/user-id/' + ${user.userId} + '/target/' + ${listing.listingId}}" class="btn btn-primary">Message The Provider</a>
                         </div>
                     </div>

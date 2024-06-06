@@ -42,9 +42,10 @@ public class ListingController {
     }
 
 
-    @GetMapping("/listing-id/{listingId}")
-    public String findListingById(@PathVariable int listingId, Model model) {
+    @GetMapping("/listing-id/{listingId}/user-id/{userId}")
+    public String findListingById(@PathVariable int listingId, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(listingId));
+        model.addAttribute("userAttr", userService.getUserByUserId(userId));
         return "listing-detail";
     }
 

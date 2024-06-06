@@ -90,7 +90,8 @@
     <p><strong>Details:</strong> <span th:text="${listing.details}"></span></p>
     <p><strong>Target Date:</strong> <span th:text="${listing.targetDate}"></span></p>
     <p><strong>Status:</strong> <span th:text="${listing.status}"></span></p>
-    <a href="/listing/all" class="btn btn-primary">Back to Listings</a>
+    <a th:object="${userAttr}" th:unless="${userAttr} == null" th:href="@{'/user/user-id/'+${userAttr.userId}}" class="btn btn-primary">Back to Listings</a>
+    <a th:object="${userAttr}" th:if="${userAttr} == null" href="/user/user-id/0" class="btn btn-primary">Back to Listings</a>
 </div>
 </body>
 </html>
