@@ -9,33 +9,62 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service // Marks this class as a Spring Service component
 public class ListingService {
-    @Autowired
+
+    @Autowired // Automatically injects the ListingRepository dependency
     ListingRepository listingRepository;
+
+    // UserRepository and ConvRepository are declared
     UserRepository userRepository;
     ConvRepository convRepository;
 
+    /**
+     * Fetches all listings from the repository.
+     * @return a list of all listings.
+     */
     public List<Listing> getAllListings() {
         return listingRepository.findAll();
     }
 
+    /**
+     * Fetches a listing by its ID.
+     * @param listingId the ID of the listing to retrieve.
+     * @return the Listing object if found, otherwise null.
+     */
     public Listing getListingById(int listingId) {
         return listingRepository.findById(listingId).orElse(null);
     }
 
+    /**
+     * Fetches all listings for a specific user.
+     * @param userId the ID of the user whose listings are to be retrieved.
+     * @return a list of listings for the specified user.
+     */
     public List<Listing> queryByUserId(int userId){
         return listingRepository.queryByUserId(userId);
     }
 
+    /**
+     * Creates a new listing.
+     * @param listing the Listing object to be created.
+     */
     public void createListing(Listing listing) {
         listingRepository.save(listing);
     }
 
+    /**
+     * Updates an existing listing.
+     * @param listing the Listing object with updated information.
+     */
     public void updateListing(Listing listing) {
-        listingRepository.save(listing);
+        listingRepository.save(listing); // save() can be used for both creating and updating
     }
 
+    /**
+     * Deletes a listing by its ID.
+     * @param id the ID of the listing to be deleted.
+     */
     public void deleteListing(int id) {
         listingRepository.deleteById(id);
     }
