@@ -31,21 +31,13 @@ public class ListingController {
         model.addAttribute("allListing", listingService.getAllListings());
         return "all-listings";
     }
-    /*public List<Listing> getAllListings(){
-        return listingService.getAllListings();
-    }
-    public String getAllListings(Model model){
-    model.addAttribute("allListings", listingService.getAllListings());
-    return "all-listings";
-    }*/
 
-    /*@GetMapping("/userid/{userId}") // replaced by userController.userPage
+
+    @GetMapping("/userid/{userId}")
     public List<Listing> findListingByUserId(@PathVariable int userId){
         return listingService.queryByUserId(userId);
     }
-     public String findListingByUserId(){
-        return "find-Listing-By-User-Id";
-    }*/
+
 
     @GetMapping("/listing-id/{listingId}")
     public String findListingById(@PathVariable int listingId, Model model) {
@@ -64,39 +56,18 @@ public class ListingController {
         listingService.createListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId();
     }
-    /*public String createListing(Listing listing, int userId){
-        listing.setUserId(userId);
-        listingService.createListing(listing);
-        return "listing-created";
-    }*/
-    /*public RedirectView createListing(Listing listing, RedirectAttributes attributes) {
-        listingService.createListing(listing);
-        attributes.addFlashAttribute("message", "Listing created successfully!");
-        return new RedirectView("/webapp/user/userid/");
-                                                            //fix address!!
-    }*/
 
     @PostMapping("/update")
     public String updateListing(Listing listing){
         listingService.updateListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId();
     }
-    /*public RedirectView updateListing(@RequestParam("listingId") int id, Listing listing, RedirectAttributes attributes) {
-        listingService.updateListing(listing);
-        attributes.addFlashAttribute("message", "Listing updated successfully!");
-        return new RedirectView("/webapp/user/userid/");
-                                                             //fix address!!
-    }*/
 
     @GetMapping("/delete/{id}")
     public String deleteListing(@PathVariable int id){
         listingService.deleteListing(id);
         return "redirect:/listing/all";
     }
-    /*public RedirectView deleteListing(@RequestParam("listingId") int id, RedirectAttributes attributes) {
-        listingService.deleteListing(id);
-        attributes.addFlashAttribute("message", "Listing deleted successfully!");
-        return new RedirectView("/webapp/user/userid/");
-    }*/
+
 }
 

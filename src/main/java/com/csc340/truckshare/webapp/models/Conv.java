@@ -2,22 +2,26 @@ package com.csc340.truckshare.webapp.models;
 
 import jakarta.persistence.*;
 
+// Entity annotation marks this class as a JPA entity
 @Entity
+// Specifies the table name in the database
 @Table(name = "conversation")
 
 public class Conv {
 
+    // Primary key annotation, with auto-generated value
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int convId;
 
-    private int sourceUserId;
-    private int targetUserId;
+    private int sourceUserId; // ID of the user who initiated the conversation
+    private int targetUserId; // ID of the user who is the target of the conversation
 
-    private String title;
+    private String title; // Title of the conversation
 
-    private boolean supportNeeded;
+    private boolean supportNeeded; // Flag indicating if support is needed
 
+    // Default constructor
     public Conv() {
     }
 
