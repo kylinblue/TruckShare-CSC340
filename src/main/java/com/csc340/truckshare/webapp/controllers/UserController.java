@@ -50,11 +50,9 @@ public class UserController {
     public String authUser(@ModelAttribute("user") User user, Model model) {
         User authUser = userService.getUserByUserName(user.getUsername());
         if (authUser!=null) {
-            System.out.println("user found");
             return "redirect:/user/user-id/" + authUser.getUserId();
         }
         else {
-            System.out.println("invalid");
             model.addAttribute("invalid", "invalid combination");
             return "user-login";
         }
@@ -75,7 +73,7 @@ public class UserController {
     public String userPage(@PathVariable int userId, Model model) {
         model.addAttribute("user", userService.getUserByUserId(userId));
         model.addAttribute("listingList", listingService.getAllListings());
-        return "all-listings";
+        return "user-homepage";
     }
 
     /*@PostMapping("/auth")

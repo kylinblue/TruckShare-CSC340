@@ -70,9 +70,10 @@
 </head>
 <body>
 <div>
-    <h1>Listing Details</h1>
+    <h1>Delete Confirmation</h1>
 </div>
 <div class="container">
+    <h2>You are about to delete the listing:</h2>
     <div class="header">
         <div class="title">
             <span th:text="${listing.title}"></span>
@@ -84,13 +85,10 @@
             <img th:src="@{'data:image/jpeg;base64,' + ${T(org.apache.tomcat.util.codec.binary.Base64).encodeBase64String(listing.image)}}" alt="Listing Image">
         </div>
     </div> -->
-    <p><strong>User ID:</strong> <span th:text="${listing.userId}"></span></p>
     <p><strong>Details:</strong> <span th:text="${listing.details}"></span></p>
-    <p><strong>Target Date:</strong> <span th:text="${listing.targetDate}"></span></p>
     <p><strong>Status:</strong> <span th:text="${listing.status}"></span></p>
-    <a th:object="${user}" th:unless="${user} == null" th:href="@{'/user/user-id/'+${user.userId}}" class="btn btn-primary">Reserve today</a>
-    <a th:object="${user}" th:unless="${user} == null" th:href="@{'/user/user-id/'+${user.userId}}" class="btn btn-primary">Back to Listings</a>
-    <a th:object="${user}" th:if="${user} == null" href="/user/user-id/0" class="btn btn-primary">Back to Listings</a>
+    <a th:href="@{'/listing/delete/'+${listing.listingId}+'/user/'+${listing.userId}+'/confirmed'}" class="btn btn-primary">Confirm Deletion</a>
+    <a th:href="@{'/listing/listing-id/'+${listing.listingId}+'/user-id/'+${listing.userId}}" class="btn btn-primary">Cancel and Return to Details</a>
 </div>
 </body>
 </html>

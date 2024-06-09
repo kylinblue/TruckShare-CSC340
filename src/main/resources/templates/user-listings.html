@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">TruckShare</a>
+        <a class="navbar-brand" href="#" th:href="@{'/user/user-id/' + ${user.userId}}">TruckShare</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,10 +31,15 @@
 </nav>
 
 <div class="container mt-5">
+    <div>
+        <a href="#" th:object="${user}" th:href="@{'/listing/form/user/' + ${user.userId}}">
+            <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">
+        </a>
+
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Username</th>
             <th>Title</th>
             <th>Details</th>
             <th>Status</th>
@@ -43,12 +48,14 @@
         </thead>
         <tbody>
         <tr data-th-each="listing : ${listings}">
-            <td data-th-text="${listing.username}"></td>
             <td data-th-text="${listing.title}"></td>
             <td data-th-text="${listing.details}"></td>
             <td data-th-text="${listing.status}"></td>
             <td>
                 <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}" class="btn btn-primary btn-sm">View Details</a>
+            </td>
+            <td>
+                <a data-th-href="@{'/listing/delete/' + ${listing.listingId} + '/user/' + ${user.userId}}" class="btn btn-primary btn-sm">Delete Listing</a>
             </td>
         </tr>
         </tbody>

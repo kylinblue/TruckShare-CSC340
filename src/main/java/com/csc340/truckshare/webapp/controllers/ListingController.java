@@ -41,27 +41,45 @@ public class ListingController {
     }
 
 
-    @GetMapping("/listing-id/{listingId}/user-id/{userId}")
+    @GetMapping("/listing-id/{listingId}/user-id/{userId}") // A particular listing
     public String findListingById(@PathVariable int listingId, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(listingId));
         model.addAttribute("user", userService.getUserByUserId(userId));
         return "listing-detail";
     }
 
-    @GetMapping("/user-id/{id}")
+    @GetMapping("/user-id/{id}") // All listings for a particular user
     public String findListingByUserId(@PathVariable int id, Model model){
         model.addAttribute("listings", listingService.queryByUserId(id));
         model.addAttribute("user", userService.getUserByUserId(id));
         return "user-listings";
     }
 
-    @GetMapping("/get-getUsername/{id}")
+    /*@GetMapping("/get-getUsername/{id}")
     public String getUsername(@PathVariable int id) {
         return userService.getUserByUserId(id).getUsername();
+    }*/
+
+    @GetMapping("/form/user/{id}")
+    public String listingForm(@PathVariable int id, Model model)
+    {
+        Listing newListing = new Listing();
+        newListing.setUserId(id);
+        newListing.setNewness(true);
+        model.addAttribute("listing", newListing);
+        model.addAttribute("user", userService.getUserByUserId(id));
+        return "listing-form";
     }
 
-    @PostMapping("/create")
-    public String createListing(@RequestBody Listing listing){ //userId passed by front end
+    @GetMapping("/form/{id}/user/{userId}")
+    public String existingForm(@PathVariable int id, @PathVariable int userId, Model model) {
+        model.addAttribute("listing", listingService.getListingById(id));
+        model.addAttribute("user", userService.getUserByUserId(id));
+        return "listing-form";
+    }
+
+    @PostMapping("/save")
+    public String createListing(@ModelAttribute("listing") Listing listing){ //userId passed by front end
         listingService.createListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId() + "/user-id/" + listing.getUserId();
     }
@@ -84,10 +102,17 @@ public class ListingController {
         return "redirect:/listing/listing-id/" + listing.getListingId();
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteListing(@PathVariable int id){
+    @GetMapping("/delete/{id}/user/{userId}/confirmed")
+    public String deleteListing(@PathVariable int id, @PathVariable int userId){
         listingService.deleteListing(id);
-        return "redirect:/listing/all";
+        return "redirect:/listing/user-id/{userId}";
+    }
+
+    @GetMapping("/delete/{id}/user/{userId}")
+    public String deleteConfirmation(@PathVariable int id, @PathVariable int userId, Model model) {
+        model.addAttribute("listing", listingService.getListingById(id));
+        model.addAttribute("user", userService.getUserByUserId(userId));
+        return "listing-delete-confirmation";
     }
 
 }
