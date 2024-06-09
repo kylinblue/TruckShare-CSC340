@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -23,7 +23,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-secondary text-uppercase mb-5" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="index.html">TruckShare</a>
+        <a class="navbar-brand" href="/">TruckShare</a>
         <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -32,7 +32,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/login">Login</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/signup">Sign Up</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/listing/all">Listings</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/user-id/0">Listings</a></li>
             </ul>
         </div>
     </div>
@@ -54,32 +54,35 @@
                     <div class="card mt-5">
                         <div class="card-body py-5 px-md-5 mt-5">
                             <!-- fix the form -->
-                            <form th:action="@{/user/create}" method="POST">
+                            <h1>Provide your information to sign up</h1>
+                            <form action="#" th:action="@{/user/create}" method="POST" th:object="${user}">
                                 <!-- 2 column grid layout with text inputs for the first and last names -->
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="firstName" class="form-control" />
+                                            <input type="text" id="firstName" th:field="*{firstName}" class="form-control" />
                                             <label class="form-label" for="firstName">First name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="lastName" class="form-control" />
+                                            <input type="text" id="lastName" th:field="*{lastName}" class="form-control" />
                                             <label class="form-label" for="lastName">Last name</label>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div th:if="${exists}" class="alert alert-danger">User already exists.</div>
+
                                 <!-- Username input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="username" id="username" class="form-control" />
+                                    <input type="text" id="username" th:field="*{username}" class="form-control" />
                                     <label class="form-label" for="username">Username</label>
                                 </div>
 
                                 <!-- Password input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" id="password" class="form-control" />
+                                    <input type="password" id="password" th:field="*{password}" class="form-control" />
                                     <label class="form-label" for="password">Password</label>
                                 </div>
 

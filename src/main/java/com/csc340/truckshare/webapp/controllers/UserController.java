@@ -22,20 +22,23 @@ public class UserController {
     ConvService conversationService;
 
     @GetMapping("/login") // the login page
-    public String userLogin(){
+    public String userLogin(Model model){
+        model.addAttribute("user", new User());
         return "user-login";
     }
 
     @GetMapping("/signup") // aka create
-    public String userSignup(){
+    public String userSignup(Model model){
+        model.addAttribute("user", new User());
+
         return "user-signup";
     }
 
     @PostMapping("/create")
-    public String createUser(@RequestBody User user, Model model) {
-        // User: isAdmin? userPassword? username? firstName? lastName?
-        if (userService.checkUserByUsername(user.getUsername())){
-            model.addAttribute("response", "User exists");
+    public String createUser(@ModelAttribute("user") User user, Model model) {
+        // User: isAdmin? userPassword? getUsername? firstName? lastName?
+        if (userService.getUserByUserName(user.getUsername())!=null) {
+            model.addAttribute("exists", "User exists");
             return "user-signup";
         }
         else {
@@ -44,13 +47,15 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public String authUser(@RequestBody User user, Model model) {
-        User userInit = userService.getUserByUserName(user.getUsername(), user.getUserPassword());
-        if (userInit!=null) {
-            return "redirect:/user/user-id/" + userInit.getUserPassword();
+    public String authUser(@ModelAttribute("user") User user, Model model) {
+        User authUser = userService.getUserByUserName(user.getUsername());
+        if (authUser!=null) {
+            System.out.println("user found");
+            return "redirect:/user/user-id/" + authUser.getUserId();
         }
         else {
-            model.addAttribute("response", "Wrong password");
+            System.out.println("invalid");
+            model.addAttribute("invalid", "invalid combination");
             return "user-login";
         }
         /*int auth = userService.authUser(user.getUserId(), user.getUsername());
@@ -74,8 +79,8 @@ public class UserController {
     }
 
     /*@PostMapping("/auth")
-    public String userAuth(String username, String password){
-        User user = userService.getUserByUserName(username, password);
+    public String userAuth(String getUsername, String password){
+        User user = userService.getUserByUserName(getUsername, password);
         if (user == null)
         {
             return "auth-failure";
@@ -87,5 +92,9 @@ public class UserController {
     }*/
 
     @GetMapping("/logout")
-    public String userLogout(){ return "redirect:/"; }
+    public String userLogout(Model model){
+        model.addAttribute("user", new User());
+        model.addAttribute("logout", "logout");
+        return "user-login";
+    }
 }

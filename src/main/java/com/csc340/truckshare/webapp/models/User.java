@@ -15,7 +15,7 @@ public class User {
 
     private String username;
 
-    private String userPassword;
+    private String password;
 
     private String firstName;
     private String lastName;
@@ -23,11 +23,11 @@ public class User {
     public User() {}
 
     public User(int userId, boolean isAdmin, boolean isBanned,
-                String userPassword, String username, String details){
+                String password, String username, String details){
         this.userId = userId;
         this.isAdmin = isAdmin;
         this.isBanned = isBanned;
-        this.userPassword = userPassword;
+        this.password = password;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,12 +62,12 @@ public class User {
     }
 
     // plain text password!
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
     public String getLastName() {
@@ -106,5 +106,8 @@ public class User {
     /*public PasswordHash getUserPasswordHash() {
         return this.userPassword.hashCode();
     }*/
-
+    @Override
+    public String toString() {
+        return this.username + " " + this.password;
+    }
 }

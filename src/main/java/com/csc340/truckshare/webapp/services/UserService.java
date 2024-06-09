@@ -1,15 +1,11 @@
 package com.csc340.truckshare.webapp.services;
 
-import com.csc340.truckshare.webapp.models.Conv;
-import com.csc340.truckshare.webapp.models.Listing;
 import com.csc340.truckshare.webapp.models.User;
 import com.csc340.truckshare.webapp.repositories.ConvRepository;
 import com.csc340.truckshare.webapp.repositories.ListingRepository;
 import com.csc340.truckshare.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -20,35 +16,13 @@ public class UserService {
     @Autowired
     ConvRepository convRepository;
 
-    public User getUserByUserName(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        // fixme
-        // Need to implement password hash, currently plain text
-        if (user.getUserPassword().equals(password)) {
-            return user;
-        }
-        return null;
-    }
-
-    public boolean checkUserByUsername(String username) {
-        return userRepository.findByUsername(username) != null;
+    public User getUserByUserName(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public int createUser(User user) {
         userRepository.save(user);
         return user.getUserId();
-    }
-
-    public int authUser(int userId, String password) {
-        // 0 user doesn't exist, 1 authenticated, -1 wrong password
-        if (userRepository.existsById(userId)){
-            if (userRepository.findById(userId).orElse(null).
-                    getUserPassword().equals(password)){
-                return 1;
-            }
-            else return -1;
-        }
-        else return 0;
     }
 
     public User getUserByUserId(int userId) {

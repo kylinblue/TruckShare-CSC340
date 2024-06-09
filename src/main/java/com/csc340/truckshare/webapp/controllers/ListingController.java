@@ -1,7 +1,6 @@
 package com.csc340.truckshare.webapp.controllers;
 
 import com.csc340.truckshare.webapp.models.Listing;
-import com.csc340.truckshare.webapp.repositories.ListingRepository;
 import com.csc340.truckshare.webapp.services.ConvService;
 import com.csc340.truckshare.webapp.services.ListingService;
 import com.csc340.truckshare.webapp.services.UserService;
@@ -56,7 +55,7 @@ public class ListingController {
         return "user-listings";
     }
 
-    @GetMapping("/get-username/{id}")
+    @GetMapping("/get-getUsername/{id}")
     public String getUsername(@PathVariable int id) {
         return userService.getUserByUserId(id).getUsername();
     }
