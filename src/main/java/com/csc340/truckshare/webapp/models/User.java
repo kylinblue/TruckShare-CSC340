@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
-    private boolean isAdmin;
+    private int userType;
     private boolean isBanned;
 
     private String username;
@@ -22,10 +22,10 @@ public class User {
 
     public User() {}
 
-    public User(int userId, boolean isAdmin, boolean isBanned,
+    public User(int userId, int userType, boolean isBanned,
                 String password, String username, String details){
         this.userId = userId;
-        this.isAdmin = isAdmin;
+        this.userType = userType;
         this.isBanned = isBanned;
         this.password = password;
         this.username = username;
@@ -41,12 +41,12 @@ public class User {
         this.userId = userId;
     }
 
-    public boolean getUserType() {
-        return isAdmin;
+    public int getUserType() {
+        return userType;
     }
 
-    public void setUserType(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 
     public void banUser(boolean ban){
@@ -94,20 +94,8 @@ public class User {
         isBanned = banned;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
     // password hash, to be implemented
     /*public PasswordHash getUserPasswordHash() {
         return this.userPassword.hashCode();
     }*/
-    @Override
-    public String toString() {
-        return this.username + " " + this.password;
-    }
 }

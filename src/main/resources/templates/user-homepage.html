@@ -61,12 +61,19 @@
 
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/user-id/' + ${user.userId}}">My Listings</a></li>
+                       th:unless="${user.userType}==0" th:href="@{'/listing/user-id/' + ${user.userId}}">My Listings</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:object="${user}" th:unless="${user} == null" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Bookings</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/user/logout">Logout</a></li>
+                       th:unless="${user.userType}==0" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                       th:unless="${user.userType}==0" href="#">Bookings</a></li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                       th:unless="${user.userType}==0" href="/user/logout">Logout</a></li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                       th:if="${user.userType}==0" href="/user/logout">Exit Tour</a></li>
             </ul>
         </div>
     </div>
@@ -148,12 +155,16 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
+                            <p th:if="${user.userId} == ${listing.userId}"
+                               class="card-text">This is your listing</p>
                             <h5 class="card-title" data-th-text="${listing.title}"></h5>
                             <p class="card-text" data-th-text="${listing.details}"></p>
                             <p class="card-text" data-th-text="${listing.status}"></p>
-                            <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}" class="btn btn-primary">View Details</a>
-                            <a th:object="${user}" th:if="${user} == null" data-th-href="@{'/listing/listing-id/'+ ${listing.listingId} + '/user-id/0'}" class="btn btn-primary">View Details</a>
-                            <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/conv/user-id/' + ${user.userId} + '/target/' + ${listing.listingId}}" class="btn btn-primary">Message The Provider</a>
+                            <a th:object="${user}" th:unless="${user} == null"
+                               th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"
+                               class="btn btn-primary">View Details</a>
+                            <a th:unless="${user.userId} == ${listing.userId} or ${user.userType} == 0"
+                               class="btn btn-primary">Contact Provider</a>
                         </div>
                     </div>
                 </div>

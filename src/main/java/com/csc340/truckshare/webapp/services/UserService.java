@@ -20,7 +20,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public int createUser(User user) {
+    public int saveUser(User user) {
         userRepository.save(user);
         return user.getUserId();
     }
