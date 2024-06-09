@@ -78,23 +78,23 @@
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Title</label>
             <input type="text" name="title" class="form-control"
-                   th:if="${listing.getNewness}==true" th:placeholder="${title}" />
+                   th:unless="${listing.getNewness}==true" th:field="*{title}" />
             <input type="text" name="title" class="form-control"
-                   th:unless="${listing.getNewness}==true" placeholder="Descriptive title about your new listing" />
+                   th:if="${listing.getNewness}==true" placeholder="Descriptive title about your new listing" />
         </div>
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Details</label>
             <input type="text" name="details" class="form-control"
-                   th:if="${listing.getNewness}==true" th:placeholder="${details}" />
+                   th:unless="${listing.getNewness}==true" th:field="*{details}" />
             <input type="text" name="details" class="form-control"
-                   th:unless="${listing.getNewness}==true" placeholder="Describe your listing in details" />
+                   th:if="${listing.getNewness}==true" placeholder="Describe your listing in details" />
         </div>
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Status</label>
             <input type="text" name="status" class="form-control"
-                   th:if="${listing.getNewness}==true" th:placeholder="${status}" />
+                   th:unless="${listing.getNewness}==true" th:field="*{status}" />
             <input type="text" name="status" class="form-control"
-                   th:unless="${listing.getNewness}==true" placeholder="Select the status of your listing" />
+                   th:if="${listing.getNewness}==true" placeholder="Select the status of your listing" />
         </div>
         <div class="text-center pt-1 mb-5 pb-1">
             <input type="hidden" name="userId" th:value="${user.userId}"/>

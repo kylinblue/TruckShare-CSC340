@@ -74,7 +74,7 @@ public class ListingController {
     @GetMapping("/form/{id}/user/{userId}")
     public String existingForm(@PathVariable int id, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(id));
-        model.addAttribute("user", userService.getUserByUserId(id));
+        model.addAttribute("user", userService.getUserByUserId(userId));
         return "listing-form";
     }
 

@@ -41,6 +41,7 @@ public class UserController {
             return "user-signup";
         }
         else {
+            user.setUserType(1);
             return "redirect:/user/user-id/" + userService.saveUser(user);
         }
     }
