@@ -2,18 +2,24 @@ package com.csc340.truckshare.webapp.models;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "message")
 
-public class Message {
+public class Message implements Serializable {
 
     // Primary key annotation, with auto-generated value
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int msgId;
 
-    private int originUserId; // ID of the user who sent the message
-    private int destinationUserId;// ID of the user who is the recipient of the message
+    private int sourceUserId; // ID of the user who sent the message
+    private int targetUserId;// ID of the user who is the recipient of the message
+
+    //time will be implemented later
+
+    private int convId;
 
     private String payload; // The content of the message
 
@@ -21,10 +27,11 @@ public class Message {
     public Message(){}
 
     // Parameterized constructor
-    public Message(int msgId, int originUserId, int destinationUserId, String payload) {
+    public Message(int msgId, int sourceUserId, int targetUserId, int convId, String payload) {
         this.msgId = msgId;
-        this.originUserId = originUserId;
-        this.destinationUserId = destinationUserId;
+        this.sourceUserId = sourceUserId;
+        this.targetUserId = targetUserId;
+        this.convId = convId;
         this.payload = payload;
     }
 
@@ -32,21 +39,25 @@ public class Message {
         return msgId;
     }
 
-    public int getOriginUserId() {
-        return originUserId;
+    public int getSourceUserId() {
+        return sourceUserId;
     }
 
-    public void setOriginUserId(int originUserId) {
-        this.originUserId = originUserId;
+    public void setSourceUserId(int sourceUserId) {
+        this.sourceUserId = sourceUserId;
     }
 
-    public int getDestinationUserId() {
-        return destinationUserId;
+    public int getTargetUserId() {
+        return targetUserId;
     }
 
-    public void setDestinationUserId(int destinationUserId) {
-        this.destinationUserId = destinationUserId;
+    public void setTargetUserId(int targetUserId) {
+        this.targetUserId = targetUserId;
     }
+
+    public int getConvId() {return convId;}
+
+    public void setConvId(int convId) {this.convId = convId;}
 
     public String getPayload() {
         return payload;

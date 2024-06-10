@@ -48,6 +48,7 @@ public class ListingService {
      * @param listing the Listing object to be created.
      */
     public void createListing(Listing listing) {
+        listing.setConvId(0);
         listingRepository.save(listing);
     }
 

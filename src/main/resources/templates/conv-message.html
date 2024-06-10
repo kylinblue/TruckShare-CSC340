@@ -69,45 +69,39 @@
     </style>
 </head>
 <body>
-<div>
-    <h1 th:unless="${listing.getNewness}==true">Create Listing</h1>
-    <h1 th:if="${listing.getNewness}==true">Listing Update</h1>
-</div>
 <div class="container">
-    <form action="#" th:action="@{/listing/save}" method="post" th:object="${listing}">
+    <div class="header">
+        <div class="title">
+            <span th:text="'Conversation between '+ ${convAttr.sourceUsername}+' and '+${convAttr.targetUsername}"></span>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div data-th-each="message: ${msgList}" class="row g-0 p-1">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <!--<p th:if="${user.userId} == ${listing.userId}"
+                       class="card-text">This is your listing</p>-->
+                    <h5 class="card-title" th:text="${message.payload}"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="#" th:action="@{/msg/send}" method="post" th:object="${message}">
         <div data-mdb-input-init class="form-outline mb-4">
-            <label class="form-label">Title</label>
-            <input type="text" name="title" class="form-control"
-                   th:unless="${listing.getNewness}==true" th:field="*{title}" />
-            <input type="text" name="title" class="form-control"
-                   th:if="${listing.getNewness}==true" placeholder="Descriptive title about your new listing" />
+            <input type="text" name="payload" class="form-control"
+                   placeholder="Compose your message here" />
+            <input type="number" name="sourceUserId" th:value="${convAttr.sourceUserId}"/>
+            <input type="number" name="targetUserId" th:value="${convAttr.targetUserId}"/>
+            <input type="number" name="convId" th:value="${convAttr.convId}"/>
         </div>
-        <div data-mdb-input-init class="form-outline mb-4">
-            <label class="form-label">Details</label>
-            <input type="text" name="details" class="form-control"
-                   th:unless="${listing.getNewness}==true" th:field="*{details}" />
-            <input type="text" name="details" class="form-control"
-                   th:if="${listing.getNewness}==true" placeholder="Describe your listing in details" />
-        </div>
-        <div data-mdb-input-init class="form-outline mb-4">
-            <label class="form-label">Status</label>
-            <input type="text" name="status" class="form-control"
-                   th:unless="${listing.getNewness}==true" th:field="*{status}" />
-            <input type="text" name="status" class="form-control"
-                   th:if="${listing.getNewness}==true" placeholder="Select the status of your listing" />
-        </div>
-        <div class="text-center pt-1 mb-5 pb-1">
-            <input type="hidden" name="userId" th:value="${user.userId}"/>
-            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save</button>
-        </div>
+        <button data-mdb-button-init data-mdb-ripple-init
+                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                type="submit">Send</button>
     </form>
-    <!--
-    <div class="image-container">
-        <div class="image-placeholder">
-            <img th:src="@{'data:image/jpeg;base64,' + ${T(org.apache.tomcat.util.codec.binary.Base64).encodeBase64String(listing.image)}}" alt="Listing Image">
-        </div>
-    </div> -->
-    <a th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/user-id/'+${user.userId}}" class="btn btn-primary">Return to Listings</a>
+    <a th:href="@{'/listing/listing-id/' + ${convAttr.listingId} + '/user-id/' + ${user.userId}}"
+       class="btn btn-primary">View Listing Details</a>
+    <a th:href="@{'/conv/user-id/'+${user.userId}}"
+       class="btn btn-primary">Return to My Messages</a>
 </div>
 </body>
 </html>

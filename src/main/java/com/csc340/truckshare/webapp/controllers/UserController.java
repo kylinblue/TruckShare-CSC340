@@ -32,7 +32,7 @@ public class UserController {
 
         return "user-signup";
     }
-
+    //TODO refuse empty input
     @PostMapping("/create")
     public String createUser(@ModelAttribute("user") User user, Model model) {
         // User: isAdmin? userPassword? getUsername? firstName? lastName?

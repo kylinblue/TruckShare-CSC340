@@ -1,13 +1,11 @@
 package com.csc340.truckshare.webapp.controllers;
 
-import com.csc340.truckshare.webapp.models.Message;
-import com.csc340.truckshare.webapp.services.ConvService;
-import com.csc340.truckshare.webapp.services.MessageService;
-import com.csc340.truckshare.webapp.services.UserService;
+import com.csc340.truckshare.webapp.models.*;
+import com.csc340.truckshare.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,16 +19,26 @@ public class MessageController {
     ConvService conversationService;
     @Autowired
     MessageService messageService;
+    @Autowired
+    ListingService listingService;
 
     // Endpoint to send a message
     @PostMapping("/send")
-    public String sendMessage (Message message) {
-        messageService.createMessage(message); // Create a new message
-        return "message-sent"; // Return the view name
+    public String sendMessage(@ModelAttribute("message") Message message, Model model) {
+        messageService.createMessage(message);
+        model.addAttribute("convAttr",
+                conversationService.getConvById(message.getConvId()));
+        model.addAttribute("msgList",
+                messageService.getMsgForConv(message.getConvId()));
+        System.out.println(listingService.getListingById((message.getConvId())));
+        model.addAttribute("user",
+                userService.getUserByUserId(message.getSourceUserId()));
+        return "redirect:/conv/conv-id/" + message.getConvId()
+                + "/user/" + message.getSourceUserId();
     }
 
     // Endpoint to get messages for a specific conversation ID
-    @PostMapping("/getmessage")
+    @GetMapping("/get/{id}")
     public List<Message> getMessage (int convId) {
         return messageService.getMsgForConv(convId);
     }// Return list of messages for the conversation ID

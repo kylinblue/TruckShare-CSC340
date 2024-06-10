@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface ConvRepository
         extends JpaRepository<Conv, Integer> {
-    @Query(value = "select * from conversation where sourceUserId =?1", nativeQuery = true)
+    @Query(value = "select * from conversation where source_user_id =?1", nativeQuery = true)
     List<Conv> queryBySourceUserId(int userId);
+
+    @Query(value = "select * from conversation where target_user_id =?1", nativeQuery = true)
+    List<Conv> queryByTargetUserId(int userId);
 
 }

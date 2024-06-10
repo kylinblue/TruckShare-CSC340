@@ -13,6 +13,8 @@ public class Listing {
 
     private int userId; // Identifier for the user associated with this listing
 
+    private int convId;
+
     private String username;
 
     private String title; // Title of the listing
@@ -33,9 +35,12 @@ public class Listing {
     }
 
     // Parameterized constructor to initialize all fields
-    public Listing(int listingId, int userId, String title, String details, Date targetDate, String status, boolean isNew) {
+    public Listing(int listingId, int userId, int convId,
+                   String title, String details, Date targetDate,
+                   String status, boolean isNew) {
         this.listingId = listingId; // Sets the listingId
         this.userId = userId; // Sets the userId
+        this.convId = convId;
         this.username = username;
         this.title = title; // Sets the title
         this.details = details; // Sets the details
@@ -57,6 +62,14 @@ public class Listing {
         return userId;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getConvId() {return convId;}
+
+    public void setConvId(int convId) {this.convId = convId;}
+
     public String getUsername() {
         return username;
     }
@@ -64,11 +77,6 @@ public class Listing {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
 
     public String getTitle() {
         return title;

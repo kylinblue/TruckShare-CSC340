@@ -164,6 +164,7 @@
                                th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"
                                class="btn btn-primary">View Details</a>
                             <a th:unless="${user.userId} == ${listing.userId} or ${user.userType} == 0"
+                               th:href="@{'/conv/user-1/'+${user.userId}+'/user-2/'+${listing.userId}+'/listing/'+${listing.listingId}}"
                                class="btn btn-primary">Contact Provider</a>
                         </div>
                     </div>

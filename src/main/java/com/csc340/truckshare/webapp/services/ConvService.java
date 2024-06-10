@@ -25,9 +25,103 @@ public class ConvService {
     }
 
     // Method to get a conversation by source and target user IDs
-    public Conv getConvByUserIdPair(int sourceUserId, int targetUserId){
+    public Conv getConvByUserIdPair(int userId1, int userId2){
+        // first iteration
+        List<Conv> convListOfUser1AsSource = convRepository.queryBySourceUserId(userId1);
+        if(convListOfUser1AsSource==null) {
+            List<Conv> convListOfUser1AsTarget = convRepository.queryByTargetUserId(userId1);
+            if(convListOfUser1AsTarget==null) {
+                return null;
+            }
+            else {
+                List<Conv> convListOfUser2AsSource = convRepository.queryBySourceUserId(userId2);
+                if(convListOfUser2AsSource==null) {
+                    return null;
+                }
+                else {
+                    for (Conv conv : convListOfUser1AsTarget){
+                        for (Conv conv2 : convListOfUser2AsSource) {
+                            if (conv.getSourceUserId() == conv2.getSourceUserId()){
+                                return conv;
+                            }
+                        }
+                    }
+                    return null;
+                }
+            }
+        }
+        else {
+            List<Conv> convListOfUser2AsTarget = convRepository.queryByTargetUserId(userId2);
+            if (convListOfUser2AsTarget==null) {
+                List<Conv> convListOfUser1AsTarget = convRepository.queryByTargetUserId(userId1);
+                if (convListOfUser1AsTarget==null) {
+                    return null;
+                }
+                else{
+                    List<Conv> convListOfUser2AsSource = convRepository.queryBySourceUserId(userId2);
+                    if (convListOfUser2AsSource==null) {
+                        return null;
+                    }
+                    else{
+                        for (Conv conv : convListOfUser1AsTarget) {
+                            for (Conv conv2 : convListOfUser2AsSource) {
+                                if (conv.getTargetUserId() == conv2.getSourceUserId()) {
+                                    return conv;
+                                }
+                            }
+                        }
+                        return null;
+                    }
+                }
+            }
+            else {
+                for (Conv conv : convListOfUser1AsSource) {
+                    for (Conv conv2 : convListOfUser2AsTarget) {
+                        if (conv.getSourceUserId() == conv2.getTargetUserId()){
+                            return conv;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        /*List<Conv> convListOfUser1AsSource = convRepository.queryBySourceUserId(userId1);
+        if (convListOfUser1AsSource!=null) {
+            List<Conv> convListOfUser2AsTarget = convRepository.queryByTargetUserId(userId2);
+            if (convListOfUser2AsTarget!=null){
+                for (Conv conv : convListOfUser1AsSource) {
+                    int targetId = conv.getTargetUserId();
+                    for (Conv conv2 : convListOfUser2AsTarget) {
+                        if (targetId == conv2.getTargetUserId()){
+                            return conv2;
+                        }
+                    }
+                }
+            }
+
+        }
+        else {
+            List<Conv> convListOfUser1AsTarget = convRepository.queryByTargetUserId(userId1);
+            if (convListOfUser1AsTarget != null) {
+                List<Conv> convListOfUser2AsSource = convRepository.queryBySourceUserId(userId2);
+                for (Conv conv : convListOfUser1AsTarget) {
+                    int sourceId = conv.getSourceUserId();
+                    for (Conv conv2 : convListOfUser2AsSource) {
+                        if (sourceId == conv2.getSourceUserId()){
+                            return conv2;
+                        }
+                    }
+                }
+            }
+            else return null;
+        }*/
+
+
+
+
         // Ensure sourceUserId is less than targetUserId for consistent query
-        if (sourceUserId>targetUserId)
+        /*if (sourceUserId>targetUserId)
         {
             int temp = sourceUserId;
             sourceUserId = targetUserId;
@@ -42,7 +136,7 @@ public class ConvService {
                 }
             }
         }
-        return null; // Return null if no conversation is found
+        return null; // Return null if no conversation is found*/
     }
 
     // Method to get a conversation by its ID
@@ -56,6 +150,7 @@ public class ConvService {
     }
 
     // Method to delete a conversation by its ID
+    //TODO verify functionality
     public void deleteConv(int convId) {
         // Check if message repository is not null
         if (this.messageRepository != null) {

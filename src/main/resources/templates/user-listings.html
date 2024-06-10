@@ -32,7 +32,7 @@
 
 <div class="container mt-5">
     <div>
-        <a href="#" th:object="${user}" th:href="@{'/listing/form/user/' + ${user.userId}}">
+        <a href="#" th:href="@{'/listing/form/user/' + ${user.userId}}">
             <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">
         </a>
 
@@ -52,10 +52,13 @@
             <td data-th-text="${listing.details}"></td>
             <td data-th-text="${listing.status}"></td>
             <td>
-                <a th:object="${user}" th:unless="${user} == null" data-th-href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}" class="btn btn-primary btn-sm">View Details</a>
+                <a th:object="${user}" th:unless="${user} == null"
+                   th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"
+                   class="btn btn-primary btn-sm">View Details</a>
             </td>
             <td>
-                <a data-th-href="@{'/listing/delete/' + ${listing.listingId} + '/user/' + ${user.userId}}" class="btn btn-primary btn-sm">Delete Listing</a>
+                <a th:href="@{'/listing/delete/' + ${listing.listingId} + '/user/' + ${user.userId}}"
+                   class="btn btn-primary btn-sm">Delete Listing</a>
             </td>
         </tr>
         </tbody>

@@ -1,9 +1,7 @@
 package com.csc340.truckshare.webapp.controllers;
 
-import com.csc340.truckshare.webapp.models.Listing;
-import com.csc340.truckshare.webapp.services.ConvService;
-import com.csc340.truckshare.webapp.services.ListingService;
-import com.csc340.truckshare.webapp.services.UserService;
+import com.csc340.truckshare.webapp.models.*;
+import com.csc340.truckshare.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
