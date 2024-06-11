@@ -17,9 +17,11 @@ public class ListingService {
     ListingRepository listingRepository;
 
     // UserRepository and ConvRepository are declared
+    @Autowired
     UserRepository userRepository;
+    @Autowired
     ConvRepository convRepository;
-
+    @Autowired
     UserService userService;
 
     /**
@@ -47,17 +49,25 @@ public class ListingService {
      * Creates a new listing.
      * @param listing the Listing object to be created.
      */
-    public void createListing(Listing listing) {
+    public int createListing(Listing listing) {
         listing.setConvId(0);
         listingRepository.save(listing);
+        return listing.getListingId();
     }
 
     /**
      * Updates an existing listing.
      * @param listing the Listing object with updated information.
      */
-    public void updateListing(Listing listing) {
-        listingRepository.save(listing); // save() can be used for both creating and updating
+    public int updateListing(Listing listing) {
+        Listing targetListing = listingRepository.findById(listing.getListingId()).orElse(null); // save() can be used for both creating and updating
+        if(targetListing!=null){
+            targetListing.setTitle(listing.getTitle());
+            targetListing.setDetails(listing.getDetails());
+            listingRepository.save(targetListing);
+            return targetListing.getListingId();
+        }
+        return 0;
     }
 
     /**

@@ -61,10 +61,11 @@
                 <span th:case="'2'">Completed</span>
             </td>
             <td>
-                <a th:object="${user}" th:unless="${user} == null"
+                <a th:unless="${user} == null"
                    th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"
                    class="btn btn-primary btn-sm">View Details</a>
-                <a th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}"
+                <a th:if="${listing.status}==1"
+                   th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}"
                    class="btn btn-primary btn-sm">Mark Listing As Complete</a>
             </td>
         </tr>

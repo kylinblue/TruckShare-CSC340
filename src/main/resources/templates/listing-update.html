@@ -70,24 +70,19 @@
 </head>
 <body>
 <div>
-    <h1 th:unless="${listing.getNewness}==true">Create Listing</h1>
-    <h1 th:if="${listing.getNewness}==true">Listing Update</h1>
+    <h1>Listing Update</h1>
 </div>
 <div class="container">
-    <form action="#" th:action="@{/listing/save}" method="post" th:object="${listing}">
+    <form action="#" th:action="@{/listing/update}" method="post" th:object="${listing}">
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Title</label>
             <input type="text" name="title" class="form-control"
-                   th:unless="${listing.getNewness}==true" th:field="*{title}" />
-            <input type="text" name="title" class="form-control"
-                   th:if="${listing.getNewness}==true" placeholder="Descriptive title about your new listing" />
+                   th:field="*{title}" />
         </div>
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Details</label>
             <input type="text" name="details" class="form-control"
-                   th:unless="${listing.getNewness}==true" th:field="*{details}" />
-            <input type="text" name="details" class="form-control"
-                   th:if="${listing.getNewness}==true" placeholder="Describe your listing in details" />
+                   th:field="*{details}" />
         </div>
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Status</label>
@@ -96,11 +91,11 @@
                 <span th:case="'1'">Reserved</span>
                 <span th:case="'2'">Completed</span>
             </p>
-            <input type="text" name="status" class="form-control"
-                   th:if="${listing.getNewness}==true" placeholder="Select the status of your listing" />
         </div>
         <div class="text-center pt-1 mb-5 pb-1">
             <input type="hidden" name="userId" th:value="${user.userId}"/>
+            <input type="hidden" name="listingId" th:value="${listing.listingId}"/>
+            <input type="hidden" name="status" th:value="${listing.status}"/>
             <button data-mdb-button-init data-mdb-ripple-init
                     class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save</button>
             <span th:if="${user.userId}==${listing.userId}

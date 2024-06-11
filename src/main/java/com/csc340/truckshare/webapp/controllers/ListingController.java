@@ -76,11 +76,10 @@ public class ListingController {
     {
         Listing newListing = new Listing();
         newListing.setUserId(id);
-        newListing.setNewness(true);
         newListing.setStatus(0);
         model.addAttribute("listing", newListing);
         model.addAttribute("user", userService.getUserByUserId(id));
-        return "listing-form";
+        return "listing-create";
     }
 
     //Get the form for editing an existing listing.
@@ -88,18 +87,24 @@ public class ListingController {
     public String existingForm(@PathVariable int id, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(id));
         model.addAttribute("user", userService.getUserByUserId(userId));
-        return "listing-form";
+        return "listing-update";
     }
 
     //Save a new listing.
-    @PostMapping("/save")
-    public String createListing(@ModelAttribute("listing") Listing listing){ //userId passed by front end
+    @PostMapping("/update")
+    public String saveListing(@ModelAttribute("listing") Listing listing){ //userId passed by front end
+        return "redirect:/listing/listing-id/" +listingService.updateListing(listing)
+            + "/user-id/" + listing.getUserId();
+    }
+
+    @PostMapping("/create")
+    public String createListing(@ModelAttribute("listing") Listing listing){
         listing.setUsername(
                 userService.getUserByUserId(
-                        listing.getUserId()).
+                                listing.getUserId()).
                         getUsername());
-        listingService.createListing(listing);
-        return "redirect:/listing/listing-id/" + listing.getListingId() + "/user-id/" + listing.getUserId();
+        return "redirect:/listing/listing-id/" + listingService.createListing(listing)
+                + "/user-id/" + listing.getUserId();
     }
 
     //Upload an image for a listing.
@@ -113,13 +118,6 @@ public class ListingController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed: " + e.getMessage());
         }
-    }
-
-    //Update an existing listing.
-    @PostMapping("/update")
-    public String updateListing(Listing listing){
-        listingService.updateListing(listing);
-        return "redirect:/listing/listing-id/" + listing.getListingId();
     }
 
     //Reserve a listing.

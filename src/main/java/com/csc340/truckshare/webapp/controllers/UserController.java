@@ -42,7 +42,6 @@ public class UserController {
         }
         else {
             user.setUserType(1);
-            user.setNewMsg(false);
             return "redirect:/user/user-id/" + userService.saveUser(user);
         }
     }
@@ -68,16 +67,6 @@ public class UserController {
     @GetMapping("/user-id/{userId}")
     public String userPage(@PathVariable int userId, Model model) {
         User user = userService.getUserByUserId(userId);
-        if(user.checkMsg()){
-            boolean hasNew = false;
-            for(Conv conv : convService.getConvByUserId(userId)) {
-                if(convService.checkNewness(conv)) {
-                    hasNew = true;
-                }
-            }
-            if(!hasNew){userService.msgStatus(user, false);}
-        }
-        userService.saveUser(user);
         model.addAttribute("user", user);
         List<Listing> allListing = listingService.getAllListings();
         if(user.getUserType()!=2){

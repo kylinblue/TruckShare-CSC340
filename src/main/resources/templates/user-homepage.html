@@ -83,14 +83,9 @@
 </nav>
 
 <div class="container">
-    <div>
-        <p th:if="@{user.checkMsg}==true">You have new message</p>
-    </div>
-    <div>
-        <a href="#" th:href="@{'/listing/form/user/' + ${user.userId}}">
-            <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">
-        </a>
-    </div>
+    <a href="#" th:href="@{'/listing/form/user/' + ${user.userId}}">
+        <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">
+    </a>
     <div class="row">
         <!-- Listings Section -->
         <div class="col-sm-8">
@@ -125,3 +120,15 @@
     </div>
 </div>
 </body>
+<footer class="bg-light text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">TruckShare</h5>
+                <p>Website enabled by <a href="https://getbootstrap.com/">Bootstrap</a>, made by <a href="https://github.com/kylinblue">CSC340 Students Group 1</a>.</p>
+                <p>TruckShare, 2024</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

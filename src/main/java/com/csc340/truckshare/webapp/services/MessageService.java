@@ -25,9 +25,4 @@ public class MessageService {
     public void deleteMsg(int msgId) {
         messageRepository.deleteById(msgId);
     }
-
-    public void markAsRead(Message message) {
-        message.setNewness(false);
-        messageRepository.save(message);
-    }
 }

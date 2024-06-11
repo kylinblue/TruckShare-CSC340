@@ -30,7 +30,7 @@ public class Listing {
 
     private byte[] image ;
 
-    private boolean isNew;
+    private int isNew;
 
     // Default constructor
     public Listing() {
@@ -38,8 +38,8 @@ public class Listing {
 
     // Parameterized constructor to initialize all fields
     public Listing(int listingId, int userId, int reserveUserId, int convId,
-                   String title, String details, Date targetDate,
-                   int status, boolean isNew) {
+                   String username, String title, String details, Date targetDate,
+                   int status, int isNew) {
         this.listingId = listingId; // Sets the listingId
         this.userId = userId; // Sets the userId
         this.reserveUserId = reserveUserId;
@@ -126,7 +126,7 @@ public class Listing {
         this.image = image;
     }
 
-    public boolean getNewness(){return isNew;}
+    public int getNewness(){return isNew;}
 
-    public void setNewness(boolean isNew){}
+    public void setNewness(int isNew){this.isNew = isNew;}
 }

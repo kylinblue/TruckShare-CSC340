@@ -25,9 +25,14 @@ public class MessageController {
     // Endpoint to send a message
     @PostMapping("/send")
     public String sendMessage(@ModelAttribute("message") Message message, Model model) {
-        String payload = userService.getUserByUserId(message.getSourceUserId()).getUsername();
-        message.setPayload(payload.concat(": " + message.getPayload()));
-        message.setNewness(true);
+        String payload = java.time.LocalDate.now().toString()
+                + " "
+                + java.time.LocalTime.now().toString();
+        payload = payload.substring(0, payload.length()-10);
+        message.setPayload(
+                payload.concat("\n" +
+                        userService.getUserByUserId(message.getSourceUserId()).getUsername()
+                                + ": " + message.getPayload()));
         messageService.createMessage(message);
         model.addAttribute("convAttr",
                 conversationService.getConvById(message.getConvId()));

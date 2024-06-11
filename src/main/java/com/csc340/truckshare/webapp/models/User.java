@@ -12,7 +12,6 @@ public class User {
 
     private int userType;
     private boolean isBanned;
-    private boolean hasNewMsg;
 
     private String username;
 
@@ -23,12 +22,11 @@ public class User {
 
     public User() {}
 
-    public User(int userId, int userType, boolean isBanned, boolean hasNewMsg,
+    public User(int userId, int userType, boolean isBanned,
                 String password, String username, String details){
         this.userId = userId;
         this.userType = userType;
         this.isBanned = isBanned;
-        this.hasNewMsg = hasNewMsg;
         this.password = password;
         this.username = username;
         this.firstName = firstName;
@@ -54,10 +52,6 @@ public class User {
     public void banUser(boolean ban){
         this.isBanned = ban;
     }
-
-    public boolean checkMsg() {return hasNewMsg;}
-
-    public void setNewMsg(boolean hasNewMsg) {this.hasNewMsg = hasNewMsg;}
 
     public String getUsername() {
         return username;

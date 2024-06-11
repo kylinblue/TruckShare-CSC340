@@ -50,26 +50,7 @@ public class ConvService {
         conv.setSourceUsername(userService.getUserByUserId(userId).getUsername());
         conv.setTargetUsername(userService.getUserByUserId(userId2).getUsername());
         conv.setListingId(listing.getListingId());
-        conv.setNewness(true);
-        userService.msgStatus(userService.getUserByUserId(userId2),true);
         return conv;
-    }
-
-    public void markAsRead(Conv conv) {
-        conv.setNewness(false);
-        convRepository.save(conv);
-    }
-
-    public boolean checkNewness(Conv conv) {
-        List<Message> messageList = messageRepository.queryMsgByConvId(conv.getConvId());
-        boolean hasNew = false;
-        for(Message message : messageList){
-            if(message.getNewness()){hasNew = true;}
-        }
-        if(hasNew){conv.setNewness(true);}
-        else{conv.setNewness(false);}
-        convRepository.save(conv);
-        return hasNew;
     }
 
     // Method to delete a conversation by its ID

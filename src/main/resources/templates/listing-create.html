@@ -70,31 +70,33 @@
 </head>
 <body>
 <div>
-    <h1>Delete Confirmation</h1>
+    <h1>Create Listing</h1>
 </div>
 <div class="container">
-    <h2>You are about to delete the listing:</h2>
-    <div class="header">
-        <div class="title">
-            <span th:text="${listing.title}"></span>
+    <form action="#" th:action="@{/listing/create}" method="post" th:object="${listing}">
+        <div data-mdb-input-init class="form-outline mb-4">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" class="form-control"
+                   placeholder="Descriptive title about your new listing" />
         </div>
-    </div>
+        <div data-mdb-input-init class="form-outline mb-4">
+            <label class="form-label">Details</label>
+            <input type="text" name="details" class="form-control"
+                   placeholder="Describe your listing in details" />
+        </div>
+        <div class="text-center pt-1 mb-5 pb-1">
+            <input type="hidden" name="userId" th:value="${user.userId}"/>
+            <button data-mdb-button-init data-mdb-ripple-init
+                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save</button>
+        </div>
+    </form>
     <!--
     <div class="image-container">
         <div class="image-placeholder">
             <img th:src="@{'data:image/jpeg;base64,' + ${T(org.apache.tomcat.util.codec.binary.Base64).encodeBase64String(listing.image)}}" alt="Listing Image">
         </div>
     </div> -->
-    <p><strong>Details:</strong> <span th:text="${listing.details}"></span></p>
-    <p><strong>Status:</strong>
-        <span th:switch="${listing.status}">
-            <span th:case="'0'">Available</span>
-            <span th:case="'1'">Reserved</span>
-            <span th:case="'2'">Completed</span>
-        </span>
-    </p>
-    <a th:href="@{'/listing/delete/'+${listing.listingId}+'/user/'+${listing.userId}+'/confirmed'}" class="btn btn-primary">Confirm Deletion</a>
-    <a th:href="@{'/listing/listing-id/'+${listing.listingId}+'/user-id/'+${listing.userId}}" class="btn btn-primary">Cancel and Return to Details</a>
+    <a th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/user-id/'+${user.userId}}" class="btn btn-primary">Return to Listings</a>
 </div>
 </body>
 </html>

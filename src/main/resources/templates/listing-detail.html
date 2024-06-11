@@ -113,7 +113,7 @@
        th:href="@{'/listing/delete/' + ${listing.listingId} + '/user/' + ${user.userId}}"
        class="btn btn-primary">Delete Listing</a>
     <a th:unless="${user} == null"
-       th:href="@{'/user/user-id/'+${user.userId}}"
+       th:href="@{'/listing/user-id/'+${user.userId}}"
        class="btn btn-primary">Back to My Listings</a>
     <a th:if="${user} == null" href="/user/user-id/0"
        class="btn btn-primary">Back to Listings</a>
