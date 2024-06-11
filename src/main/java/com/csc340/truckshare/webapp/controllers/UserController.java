@@ -42,6 +42,7 @@ public class UserController {
         }
         else {
             user.setUserType(1);
+            user.setNewMsg(false);
             return "redirect:/user/user-id/" + userService.saveUser(user);
         }
     }
