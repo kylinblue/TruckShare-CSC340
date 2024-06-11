@@ -67,10 +67,10 @@
                        th:unless="${user.userType}==0" th:href="@{'/listing/user-id/' + ${user.userId}}">My Listings</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:unless="${user.userType}==0" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
+                       th:unless="${user.userType}==0" th:href="@{'/listing/reservations/user-id/' + ${user.userId}}">My Reservations</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:unless="${user.userType}==0" th:href="@{'/listing/reservations/user-id/' + ${user.userId}}">My Reservations</a></li>
+                       th:unless="${user.userType}==0" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
                        th:unless="${user.userType}==0" href="/user/logout">Logout</a></li>
@@ -83,9 +83,15 @@
 </nav>
 
 <div class="container">
+    <div>
+        <a href="#" th:href="@{'/listing/form/user/' + ${user.userId}}">
+            <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">
+        </a>
+    </div>
     <div class="row">
+
         <!-- Sidebar Section -->
-        <div class="col-sm-4">
+        <!--<div class="col-sm-4">
             <div class="flex-shrink-0 p-3 bg-white sticky-top" style="width: 280px;">
                 <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
                     <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
@@ -146,7 +152,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>-->
 
         <!-- Listings Section -->
         <div class="col-sm-8">

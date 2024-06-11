@@ -118,6 +118,7 @@ public class ListingController {
     public String reserveListing(@PathVariable int listingId, @PathVariable int userId) {
         Listing listing = listingService.getListingById(listingId);
         listing.setStatus(1);
+        listing.setReserveUserId(userId);
         listingService.updateListing(listing);
         return "redirect:/listing/listing-id/"+listingId+"/user-id/"+userId;
     }

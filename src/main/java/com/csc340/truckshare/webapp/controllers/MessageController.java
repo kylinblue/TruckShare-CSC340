@@ -27,6 +27,7 @@ public class MessageController {
     public String sendMessage(@ModelAttribute("message") Message message, Model model) {
         String payload = userService.getUserByUserId(message.getSourceUserId()).getUsername();
         message.setPayload(payload.concat(": " + message.getPayload()));
+        message.setNewness(true);
         messageService.createMessage(message);
         model.addAttribute("convAttr",
                 conversationService.getConvById(message.getConvId()));
