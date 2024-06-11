@@ -48,7 +48,7 @@
         <tr th:each="conv : ${convList}">
             <td th:text="${conv.targetUsername}"></td>
             <td>
-                <a class="btn btn-primary btn-sm" href="#" th:href="@{'/conv/conv-id/'+${conv.convId}}">View Conversation</a>
+                <a class="btn btn-primary btn-sm" href="#" th:href="@{'/conv/conv-id/'+${conv.convId}+'/user/'+${user.userId}}">View Conversation</a>
                 <a class="btn btn-primary btn-sm" href="#" th:href="@{'/conv/delete/'+${conv.convId}+'/user/'+${user.userId}}">Delete Conversation</a>
                 <a class="btn btn-primary btn-sm" href="#">Request Support</a>
             </td>

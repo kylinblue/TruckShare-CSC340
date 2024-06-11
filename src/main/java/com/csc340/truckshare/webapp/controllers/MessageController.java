@@ -25,12 +25,13 @@ public class MessageController {
     // Endpoint to send a message
     @PostMapping("/send")
     public String sendMessage(@ModelAttribute("message") Message message, Model model) {
+        String payload = userService.getUserByUserId(message.getSourceUserId()).getUsername();
+        message.setPayload(payload.concat(": " + message.getPayload()));
         messageService.createMessage(message);
         model.addAttribute("convAttr",
                 conversationService.getConvById(message.getConvId()));
         model.addAttribute("msgList",
                 messageService.getMsgForConv(message.getConvId()));
-        System.out.println(listingService.getListingById((message.getConvId())));
         model.addAttribute("user",
                 userService.getUserByUserId(message.getSourceUserId()));
         return "redirect:/conv/conv-id/" + message.getConvId()

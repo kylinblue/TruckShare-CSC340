@@ -49,8 +49,7 @@
                                             <h4 class="mt-1 mb-5 pb-1">Get equipped, get moving!</h4>
                                         </div>
 
-                                        <div th:if="${invalid}" class="alert alert-danger">
-                                            Invalid username and password.</div>
+                                        <div th:if="${invalid}" class="alert alert-danger" th:text="${invalid}"></div>
                                         <div th:if="${logout}" class="alert alert-danger">
                                             You have been logged out.</div>
 

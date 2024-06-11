@@ -50,10 +50,16 @@ public class UserController {
     public String authUser(@ModelAttribute("user") User user, Model model) {
         User authUser = userService.getUserByUserName(user.getUsername());
         if (authUser!=null) {
-            return "redirect:/user/user-id/" + authUser.getUserId();
+            if (user.getPassword().equals(authUser.getPassword())){
+                return "redirect:/user/user-id/" + authUser.getUserId();
+            }
+            else {
+                model.addAttribute("invalid", "Invalid Password");
+                return "user-login";
+            }
         }
         else {
-            model.addAttribute("invalid", "invalid combination");
+            model.addAttribute("invalid", "User Not Found");
             return "user-login";
         }
         /*int auth = userService.authUser(user.getUserId(), user.getUsername());

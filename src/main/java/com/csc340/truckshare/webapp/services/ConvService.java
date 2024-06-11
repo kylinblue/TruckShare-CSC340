@@ -1,27 +1,36 @@
 package com.csc340.truckshare.webapp.services;
 
-import com.csc340.truckshare.webapp.models.Conv;
-import com.csc340.truckshare.webapp.models.Message;
-import com.csc340.truckshare.webapp.repositories.ConvRepository;
-import com.csc340.truckshare.webapp.repositories.ListingRepository;
-import com.csc340.truckshare.webapp.repositories.MessageRepository;
-import com.csc340.truckshare.webapp.repositories.UserRepository;
+import com.csc340.truckshare.webapp.models.*;
+import com.csc340.truckshare.webapp.repositories.*;
+import com.csc340.truckshare.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class ConvService {
     @Autowired
     ConvRepository convRepository; // Repository for accessing conversation data
+    @Autowired
     MessageRepository messageRepository; // Repository for accessing message data
+    @Autowired
     ListingRepository listingRepository; // Repository for accessing listing data
+    @Autowired
     UserRepository userRepository; // Repository for accessing user data
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    ListingService listingService;
 
     // Method to get conversations by user ID
     public List<Conv> getConvByUserId(int userid){
-        return convRepository.queryBySourceUserId(userid); // Query conversations by source user ID
+        return Stream.concat(
+                        (convRepository.queryBySourceUserId(userid).stream()),
+                        (convRepository.queryByTargetUserId(userid).stream()))
+                .toList(); // Query conversations by source user ID
     }
 
     // Method to get a conversation by source and target user IDs
@@ -147,6 +156,17 @@ public class ConvService {
     // Method to save a conversation
     public void saveConv(Conv conversation) {
         convRepository.save(conversation); // Save the conversation to the repository
+    }
+
+    public Conv initConv(int userId, int userId2, int listingId) {
+        Conv conv = new Conv();
+        Listing listing = listingService.getListingById(listingId);
+        conv.setSourceUserId(userId);
+        conv.setTargetUserId(userId2);
+        conv.setSourceUsername(userService.getUserByUserId(userId).getUsername());
+        conv.setTargetUsername(userService.getUserByUserId(userId2).getUsername());
+        conv.setListingId(listing.getListingId());
+        return conv;
     }
 
     // Method to delete a conversation by its ID

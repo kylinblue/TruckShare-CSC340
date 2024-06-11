@@ -90,9 +90,8 @@
         <div data-mdb-input-init class="form-outline mb-4">
             <input type="text" name="payload" class="form-control"
                    placeholder="Compose your message here" />
-            <input type="number" name="sourceUserId" th:value="${convAttr.sourceUserId}"/>
-            <input type="number" name="targetUserId" th:value="${convAttr.targetUserId}"/>
-            <input type="number" name="convId" th:value="${convAttr.convId}"/>
+            <input type="hidden" name="sourceUserId" th:value="${user.userId}"/>
+            <input type="hidden" name="convId" th:value="${convAttr.convId}"/>
         </div>
         <button data-mdb-button-init data-mdb-ripple-init
                 class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"

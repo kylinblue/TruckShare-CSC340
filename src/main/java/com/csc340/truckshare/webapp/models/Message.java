@@ -30,7 +30,6 @@ public class Message implements Serializable {
     public Message(int msgId, int sourceUserId, int targetUserId, int convId, String payload) {
         this.msgId = msgId;
         this.sourceUserId = sourceUserId;
-        this.targetUserId = targetUserId;
         this.convId = convId;
         this.payload = payload;
     }
@@ -45,14 +44,6 @@ public class Message implements Serializable {
 
     public void setSourceUserId(int sourceUserId) {
         this.sourceUserId = sourceUserId;
-    }
-
-    public int getTargetUserId() {
-        return targetUserId;
-    }
-
-    public void setTargetUserId(int targetUserId) {
-        this.targetUserId = targetUserId;
     }
 
     public int getConvId() {return convId;}

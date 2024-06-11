@@ -84,7 +84,7 @@ public class Conv {
 
     public int getListingId(){return listingId;}
 
-    public void setListingId(int listingId){}
+    public void setListingId(int listingId){this.listingId = listingId;}
 
     public String getTitle() {
         return title;

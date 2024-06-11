@@ -57,32 +57,51 @@ public class ConvController {
     public String getConvByUserPair(@PathVariable int userId, @PathVariable int userId2,
                                     @PathVariable int listingId,
                                     Model model){
-        if (listingService.getListingById(listingId).getConvId()==0) {
-            Conv conv = new Conv();
-            conv.setSourceUserId(userId);
-            conv.setTargetUserId(userId2);
-            conv.setSourceUsername(userService.getUserByUserId(userId).getUsername());
-            conv.setTargetUsername(userService.getUserByUserId(userId2).getUsername());
+        Listing listing = listingService.getListingById(listingId);
+        Conv conv;
+        if (listing.getConvId() == 0) {
+            conv = convService.initConv(userId, userId2, listingId);
             convService.saveConv(conv);
-            model.addAttribute("convAttr", conv);
-            model.addAttribute("user",userService.getUserByUserId(userId));
-            model.addAttribute("listing", listingService.getListingById(listingId));
-            return "conv-message";
+            listing.setConvId(conv.getConvId());
+            listingService.updateListing(listing);
+            model.addAttribute("convAttr",
+                    conv);
+            model.addAttribute("user",
+                    userService.getUserByUserId(userId));
+            model.addAttribute("listing",
+                    listingService.getListingById(listingId));
         }
-        Conv conv = convService.getConvById(listingService.getListingById(listingId).getConvId());
-        model.addAttribute("convAttr", conv);
-        model.addAttribute("listing", listingService.getListingById(listingId));
-        model.addAttribute("user",userService.getUserByUserId(userId));
-        model.addAttribute("msgList",
-                messageService.getMsgForConv(conv.getConvId()));
+        else {
+            if (convService.getConvById(listing.getConvId()) == null){
+                conv = convService.initConv(userId, userId2, listingId);
+                convService.saveConv(conv);
+                listing.setConvId(conv.getConvId());
+                listingService.updateListing(listing);
+            }
+            else{
+                conv = convService.getConvById(listing.getConvId());
+                convService.saveConv(conv);
+                listing.setConvId(conv.getConvId());
+                listingService.updateListing(listing);
+                model.addAttribute("msgList",
+                        messageService.getMsgForConv(conv.getConvId()));
+            }
+            model.addAttribute("convAttr",
+                    conv);
+            model.addAttribute("listing",
+                    listingService.getListingById(listingId));
+            model.addAttribute("user",
+                    userService.getUserByUserId(userId));
+        }
         return "conv-message";
     }
 
     @GetMapping("/conv-id/{convId}/user/{userId}")
     public String getConvById(@PathVariable int convId, @PathVariable int userId, Model model) {
         Conv conv = convService.getConvById(convId);
+        Listing listing = listingService.getListingById(conv.getListingId());
         model.addAttribute("listing",
-                listingService.getListingById(conv.getListingId()));
+                listing);
         model.addAttribute("convAttr", conv);
         model.addAttribute("msgList",
                 messageService.getMsgForConv(conv.getConvId()));
