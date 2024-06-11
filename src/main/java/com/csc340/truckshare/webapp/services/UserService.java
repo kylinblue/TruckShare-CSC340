@@ -25,6 +25,11 @@ public class UserService {
         return user.getUserId();
     }
 
+    public void msgStatus(User user, boolean status) {
+        user.setNewMsg(status);
+        userRepository.save(user);
+    }
+
     public User getUserByUserId(int userId) {
         return userRepository.findById(userId).orElse(null);
     }

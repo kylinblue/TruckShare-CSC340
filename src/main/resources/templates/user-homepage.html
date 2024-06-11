@@ -83,6 +83,9 @@
 </nav>
 
 <div class="container">
+    <div th:if="${user.hasNewMsg}">
+        <p>You have new message</p>
+    </div>
     <div>
         <a href="#" th:href="@{'/listing/form/user/' + ${user.userId}}">
             <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">

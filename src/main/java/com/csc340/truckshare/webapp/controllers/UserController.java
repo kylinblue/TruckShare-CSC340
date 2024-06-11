@@ -1,10 +1,7 @@
 package com.csc340.truckshare.webapp.controllers;
 
-import com.csc340.truckshare.webapp.models.Listing;
-import com.csc340.truckshare.webapp.models.User;
-import com.csc340.truckshare.webapp.services.ConvService;
-import com.csc340.truckshare.webapp.services.ListingService;
-import com.csc340.truckshare.webapp.services.UserService;
+import com.csc340.truckshare.webapp.models.*;
+import com.csc340.truckshare.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +18,7 @@ public class UserController {
     @Autowired
     ListingService listingService;
     @Autowired
-    ConvService conversationService;
+    ConvService convService;
 
     @GetMapping("/login") // the login page
     public String userLogin(Model model){
@@ -70,6 +67,16 @@ public class UserController {
     @GetMapping("/user-id/{userId}")
     public String userPage(@PathVariable int userId, Model model) {
         User user = userService.getUserByUserId(userId);
+        if(user.checkMsg()){
+            boolean hasNew = false;
+            for(Conv conv : convService.getConvByUserId(userId)) {
+                if(convService.checkNewness(conv)) {
+                    hasNew = true;
+                }
+            }
+            if(!hasNew){userService.msgStatus(user, false);}
+        }
+        userService.saveUser(user);
         model.addAttribute("user", user);
         List<Listing> allListing = listingService.getAllListings();
         if(user.getUserType()!=2){

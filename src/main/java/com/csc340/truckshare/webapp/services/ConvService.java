@@ -2,7 +2,6 @@ package com.csc340.truckshare.webapp.services;
 
 import com.csc340.truckshare.webapp.models.*;
 import com.csc340.truckshare.webapp.repositories.*;
-import com.csc340.truckshare.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +25,10 @@ public class ConvService {
     ListingService listingService;
 
     // Method to get conversations by user ID
-    public List<Conv> getConvByUserId(int userid){
+    public List<Conv> getConvByUserId(int userId){
         return Stream.concat(
-                        (convRepository.queryBySourceUserId(userid).stream()),
-                        (convRepository.queryByTargetUserId(userid).stream()))
+                        (convRepository.queryBySourceUserId(userId).stream()),
+                        (convRepository.queryByTargetUserId(userId).stream()))
                 .toList(); // Query conversations by source user ID
     }
 
@@ -52,12 +51,25 @@ public class ConvService {
         conv.setTargetUsername(userService.getUserByUserId(userId2).getUsername());
         conv.setListingId(listing.getListingId());
         conv.setNewness(true);
+        userService.msgStatus(userService.getUserByUserId(userId2),true);
         return conv;
     }
 
     public void markAsRead(Conv conv) {
         conv.setNewness(false);
         convRepository.save(conv);
+    }
+
+    public boolean checkNewness(Conv conv) {
+        List<Message> messageList = messageRepository.queryMsgByConvId(conv.getConvId());
+        boolean hasNew = false;
+        for(Message message : messageList){
+            if(message.getNewness()){hasNew = true;}
+        }
+        if(hasNew){conv.setNewness(true);}
+        else{conv.setNewness(false);}
+        convRepository.save(conv);
+        return hasNew;
     }
 
     // Method to delete a conversation by its ID
