@@ -32,13 +32,15 @@ public class Conv {
 
     private boolean supportNeeded; // Flag indicating if support is needed
 
+    private boolean isNew;
+
     // Default constructor
     public Conv() {
     }
 
     public Conv(int convId, int sourceUserId, int targetUserId,
                 String sourceUsername, String targetUsername, int listingId,
-                List<Integer> msgId, String title, Boolean supportNeeded) {
+                List<Integer> msgId, String title, boolean supportNeeded, boolean isNew) {
         this.convId = convId;
         this.sourceUserId = sourceUserId;
         this.targetUserId = targetUserId;
@@ -48,6 +50,7 @@ public class Conv {
         this.title = title;
         this.msgId = msgId;
         this.supportNeeded = supportNeeded;
+        this.isNew = isNew;
     }
 
     public int getConvId() {
@@ -109,4 +112,8 @@ public class Conv {
     public void setSupportNeeded(boolean supportNeeded) {
         this.supportNeeded = supportNeeded;
     }
+
+    public boolean getNewness(){return isNew;}
+
+    public void setNewness(boolean isNew){this.isNew = isNew;}
 }

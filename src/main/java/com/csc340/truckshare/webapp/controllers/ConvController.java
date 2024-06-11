@@ -48,6 +48,7 @@ public class ConvController {
             conv = convService.initConv(userId, userId2, listingId);
             convService.saveConv(conv);
             listing.setConvId(conv.getConvId());
+            listing.setNewness(true);
             listingService.updateListing(listing);
             model.addAttribute("convAttr",
                     conv);
@@ -71,6 +72,11 @@ public class ConvController {
                 convService.saveConv(conv);
                 listing.setConvId(conv.getConvId());
                 listingService.updateListing(listing);
+                convService.markAsRead(conv);
+                List<Message> messageList = messageService.getMsgForConv(conv.getConvId());
+                for(Message message : messageList) {
+                    messageService.markAsRead(message);
+                }
                 model.addAttribute("msgList",
                         messageService.getMsgForConv(conv.getConvId()));
             }
@@ -88,7 +94,12 @@ public class ConvController {
     @GetMapping("/conv-id/{convId}/user/{userId}")
     public String getConvById(@PathVariable int convId, @PathVariable int userId, Model model) {
         Conv conv = convService.getConvById(convId);
+        convService.markAsRead(conv);
         Listing listing = listingService.getListingById(conv.getListingId());
+        List<Message> messageList = messageService.getMsgForConv(convId);
+        for(Message message : messageList) {
+            messageService.markAsRead(message);
+        }
         model.addAttribute("listing",
                 listing);
         model.addAttribute("convAttr", conv);

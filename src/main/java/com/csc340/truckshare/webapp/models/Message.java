@@ -23,15 +23,18 @@ public class Message implements Serializable {
 
     private String payload; // The content of the message
 
+    private boolean isNew;
+
     // Default constructor
     public Message(){}
 
     // Parameterized constructor
-    public Message(int msgId, int sourceUserId, int targetUserId, int convId, String payload) {
+    public Message(int msgId, int sourceUserId, int targetUserId, int convId, String payload, boolean isNew) {
         this.msgId = msgId;
         this.sourceUserId = sourceUserId;
         this.convId = convId;
         this.payload = payload;
+        this.isNew = isNew;
     }
 
     public int getMsgId() {
@@ -57,4 +60,8 @@ public class Message implements Serializable {
     public void setPayload(String payload) {
         this.payload = payload;
     }
+
+    public boolean getNewness(){return isNew;}
+
+    public void setNewness(boolean isNew){this.isNew = isNew;}
 }

@@ -23,13 +23,10 @@
                        th:object="${user}" th:unless="${user} == null" th:href="@{'/user/user-id/' + ${user.userId}}">My Home</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/user-id/' + ${user.userId}}">My Listings</a></li>
+                       th:unless="${user.userType}==0" th:href="@{'/listing/reservations/user-id/' + ${user.userId}}">My Reservations</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
                        th:object="${user}" th:unless="${user} == null" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
-                <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:unless="${user.userType}==0" th:href="@{'/listing/reservations/user-id/' + ${user.userId}}">My Reservations</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
                        th:unless="${user.userType}==0" href="/user/logout">Logout</a></li>
@@ -43,7 +40,6 @@
         <a href="#" th:href="@{'/listing/form/user/' + ${user.userId}}">
             <input type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" value="Create New">
         </a>
-
     </div>
     <table class="table table-striped">
         <thead>
