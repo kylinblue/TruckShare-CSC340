@@ -25,26 +25,6 @@ public class ConvController {
     ConvService convService; // Autowired dependency for ConvService
     @Autowired
     MessageService messageService;
-/*
-    // Method to create a new conversation
-    @GetMapping("/new")
-    public String createConv(Conv conversation) {
-        convService.saveConv(conversation);
-        return "message-created";
-    } //TODO make it work and link it to user-homepage*/
-
-    // Method to update an existing conversation
-    @GetMapping("/update")
-    public String updateConv(Conv conversation) {
-        convService.saveConv(conversation);
-        return "message-saved";
-    } //TODO not yet functional, as one above
-    /*
-    public RedirectView createConversation(Conversation conversation, RedirectAttributes attributes) {
-        conversationService.createConversation(conversation);
-        attributes.addFlashAttribute("message", "New conversation started!");
-        return new RedirectView("/webapp/user/userid/");
-    }*/
 
     @GetMapping("/user-id/{userId}") // List of conversations of  a particular user
     public String getConvByUserId(@PathVariable int userId, Model model) {

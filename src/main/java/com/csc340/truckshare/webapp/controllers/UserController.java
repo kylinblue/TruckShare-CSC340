@@ -65,17 +65,6 @@ public class UserController {
             model.addAttribute("invalid", "User Not Found");
             return "user-login";
         }
-        /*int auth = userService.authUser(user.getUserId(), user.getUsername());
-        if (auth == 0) {
-            return "user-doesnt-exist"; // fixme fix these redirects
-        }
-        else if (auth == -1){
-            return "wrong-password";
-        }
-        else {
-            redirectAttributes.addAttribute("userId", user.getUserId());
-            return "redirect:/user/{userId}";
-        }*/
     }
 
     @GetMapping("/user-id/{userId}")
