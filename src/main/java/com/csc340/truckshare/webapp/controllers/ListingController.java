@@ -53,6 +53,15 @@ public class ListingController {
         return "user-listings";
     }
 
+    @GetMapping("/reservations/user-id/{id}")
+    public String findListingReservedByUserId(@PathVariable int id, Model model) {
+        List<Listing> allListing = listingService.getAllListings();
+        allListing.removeIf(listing -> listing.getReserveUserId()!=id);
+        model.addAttribute("listings", allListing);
+        model.addAttribute("user", userService.getUserByUserId(id));
+        return "user-reservations";
+    }
+
     /*@GetMapping("/get-getUsername/{id}")
     public String getUsername(@PathVariable int id) {
         return userService.getUserByUserId(id).getUsername();

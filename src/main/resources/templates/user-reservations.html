@@ -29,7 +29,7 @@
                        th:object="${user}" th:unless="${user} == null" th:href="@{'/conv/user-id/' + ${user.userId}}">My Messages</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                       th:unless="${user.userType}==0" th:href="@{'/listing/reservations/user-id/' + ${user.userId}}">My Reservations</a></li>
+                       th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/reservations/user-id/' + ${user.userId}}">My Reservations</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
                        th:unless="${user.userType}==0" href="/user/logout">Logout</a></li>
@@ -67,10 +67,8 @@
                 <a th:object="${user}" th:unless="${user} == null"
                    th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"
                    class="btn btn-primary btn-sm">View Details</a>
-            </td>
-            <td>
-                <a th:href="@{'/listing/delete/' + ${listing.listingId} + '/user/' + ${user.userId}}"
-                   class="btn btn-primary btn-sm">Delete Listing</a>
+                <a th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}"
+                   class="btn btn-primary btn-sm">Mark Listing As Complete</a>
             </td>
         </tr>
         </tbody>

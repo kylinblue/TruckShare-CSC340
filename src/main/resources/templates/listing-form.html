@@ -101,8 +101,13 @@
         </div>
         <div class="text-center pt-1 mb-5 pb-1">
             <input type="hidden" name="userId" th:value="${user.userId}"/>
-            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save</button>
-            <a th:if="${listing.status}==1 and ${listing.status}!=2" th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">Mark Listing As Complete</a>
+            <button data-mdb-button-init data-mdb-ripple-init
+                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save</button>
+            <span th:if="${user.userId}==${listing.userId}
+            or ${user.userId}==${listing.reserveUserId}">
+                <a th:if="${listing.status}==1" th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}"
+                   class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">Mark Listing As Complete</a>
+            </span>
         </div>
     </form>
     <!--

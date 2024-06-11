@@ -94,7 +94,9 @@
             <span th:case="'2'">Completed</span>
         </span>
     </p>
-    <a th:unless="${user.userId} == ${listing.userId} or ${user.userType} == 0 or ${listing.status}==1"
+    <a th:unless="${user.userId} == ${listing.userId}
+        or ${user.userType} == 0
+        or ${listing.status}!=0"
        th:href="@{'/listing/reserve/'+${listing.listingId}+'/user-id/'+${user.userId}}"
        class="btn btn-primary">Reserve Now</a>
     <a th:unless="${user.userId} == ${listing.userId} or ${user.userType} == 0 or ${user.userType}!=2"
@@ -102,6 +104,11 @@
     <a th:if="${user.userId} == ${listing.userId} or ${user.userType}==2"
        th:href="@{'/listing/form/'+${listing.listingId}+'/user/'+${listing.userId}}"
        class="btn btn-primary">Edit Listing</a>
+    <span th:if="${user.userId}==${listing.userId}
+            or ${user.userId}==${listing.reserveUserId}">
+        <a th:if="${listing.status}==1" th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}"
+           class="btn btn-primary">Mark Listing As Complete</a>
+    </span>
     <a th:if="${user.userId} == ${listing.userId} or ${user.userType}==2"
        th:href="@{'/listing/delete/' + ${listing.listingId} + '/user/' + ${user.userId}}"
        class="btn btn-primary">Delete Listing</a>
