@@ -92,7 +92,6 @@ public class ListingController {
     }
 
     //Save a new listing.
-
     @PostMapping("/save")
     public String createListing(@ModelAttribute("listing") Listing listing){ //userId passed by front end
         listing.setUsername(
