@@ -1,5 +1,6 @@
 package com.csc340.truckshare.webapp.controllers;
 
+import com.csc340.truckshare.webapp.models.Listing;
 import com.csc340.truckshare.webapp.models.User;
 import com.csc340.truckshare.webapp.services.ConvService;
 import com.csc340.truckshare.webapp.services.ListingService;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -77,8 +80,13 @@ public class UserController {
 
     @GetMapping("/user-id/{userId}")
     public String userPage(@PathVariable int userId, Model model) {
-        model.addAttribute("user", userService.getUserByUserId(userId));
-        model.addAttribute("listingList", listingService.getAllListings());
+        User user = userService.getUserByUserId(userId);
+        model.addAttribute("user", user);
+        List<Listing> allListing = listingService.getAllListings();
+        if(user.getUserType()!=2){
+            allListing.removeIf(listing -> listing.getStatus() == 1);
+        }
+        model.addAttribute("listingList", allListing);
         return "user-homepage";
     }
 

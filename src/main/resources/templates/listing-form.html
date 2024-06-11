@@ -91,14 +91,18 @@
         </div>
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label">Status</label>
-            <input type="text" name="status" class="form-control"
-                   th:unless="${listing.getNewness}==true" th:field="*{status}" />
+            <p class="form-control" th:switch="${listing.status}">
+                <span th:case="'0'">Available</span>
+                <span th:case="'1'">Reserved</span>
+                <span th:case="'2'">Completed</span>
+            </p>
             <input type="text" name="status" class="form-control"
                    th:if="${listing.getNewness}==true" placeholder="Select the status of your listing" />
         </div>
         <div class="text-center pt-1 mb-5 pb-1">
             <input type="hidden" name="userId" th:value="${user.userId}"/>
             <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save</button>
+            <a th:if="${listing.status}==1 and ${listing.status}!=2" th:href="@{'/listing/complete/'+${listing.listingId}+'/user-id/'+${user.userId}}" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">Mark Listing As Complete</a>
         </div>
     </form>
     <!--

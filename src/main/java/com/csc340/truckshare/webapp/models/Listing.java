@@ -24,7 +24,7 @@ public class Listing {
     @Temporal(TemporalType.DATE) // Specifies that the date should be stored in a specific temporal type (DATE)
     private Date targetDate; // Target date for the listing
 
-    private String status; // Current status of the listing (e.g., active, inactive)
+    private int status; // 0=available, 1=reserved, 2=completed
 
     private byte[] image ;
 
@@ -37,7 +37,7 @@ public class Listing {
     // Parameterized constructor to initialize all fields
     public Listing(int listingId, int userId, int convId,
                    String title, String details, Date targetDate,
-                   String status, boolean isNew) {
+                   int status, boolean isNew) {
         this.listingId = listingId; // Sets the listingId
         this.userId = userId; // Sets the userId
         this.convId = convId;
@@ -103,11 +103,11 @@ public class Listing {
         this.targetDate = targetDate;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

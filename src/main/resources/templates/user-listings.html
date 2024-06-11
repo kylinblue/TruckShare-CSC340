@@ -20,6 +20,9 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                       th:object="${user}" th:unless="${user} == null" th:href="@{'/user/user-id/' + ${user.userId}}">My Home</a></li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded"
                        th:object="${user}" th:unless="${user} == null" th:href="@{'/listing/user-id/' + ${user.userId}}">My Listings</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded"
@@ -47,10 +50,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-th-each="listing : ${listings}">
-            <td data-th-text="${listing.title}"></td>
-            <td data-th-text="${listing.details}"></td>
-            <td data-th-text="${listing.status}"></td>
+        <tr th:each="listing : ${listings}">
+            <td th:text="${listing.title}"></td>
+            <td th:text="${listing.details}"></td>
+            <td th:switch="${listing.status}">
+                <span th:case="'0'">Available</span>
+                <span th:case="'1'">Reserved</span>
+                <span th:case="'2'">Completed</span>
+            </td>
             <td>
                 <a th:object="${user}" th:unless="${user} == null"
                    th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"

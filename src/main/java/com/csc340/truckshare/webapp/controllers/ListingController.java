@@ -32,11 +32,11 @@ public class ListingController {
         return "all-listings";
     }*/
 
-
+    /*
     @GetMapping("/userid/{userId}")
     public List<Listing> findListingByUserId(@PathVariable int userId){
         return listingService.queryByUserId(userId);
-    }
+    }*/
 
 
     @GetMapping("/listing-id/{listingId}/user-id/{userId}") // A particular listing
@@ -64,6 +64,7 @@ public class ListingController {
         Listing newListing = new Listing();
         newListing.setUserId(id);
         newListing.setNewness(true);
+        newListing.setStatus(0);
         model.addAttribute("listing", newListing);
         model.addAttribute("user", userService.getUserByUserId(id));
         return "listing-form";
@@ -78,6 +79,10 @@ public class ListingController {
 
     @PostMapping("/save")
     public String createListing(@ModelAttribute("listing") Listing listing){ //userId passed by front end
+        listing.setUsername(
+                userService.getUserByUserId(
+                        listing.getUserId()).
+                        getUsername());
         listingService.createListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId() + "/user-id/" + listing.getUserId();
     }
@@ -98,6 +103,22 @@ public class ListingController {
     public String updateListing(Listing listing){
         listingService.updateListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId();
+    }
+
+    @GetMapping("/reserve/{listingId}/user-id/{userId}")
+    public String reserveListing(@PathVariable int listingId, @PathVariable int userId) {
+        Listing listing = listingService.getListingById(listingId);
+        listing.setStatus(1);
+        listingService.updateListing(listing);
+        return "redirect:/listing/listing-id/"+listingId+"/user-id/"+userId;
+    }
+
+    @GetMapping("/complete/{listingId}/user-id/{userId}")
+    public String completeListing(@PathVariable int listingId, @PathVariable int userId) {
+        Listing listing = listingService.getListingById(listingId);
+        listing.setStatus(2);
+        listingService.updateListing(listing);
+        return "redirect:/listing/listing-id/"+listingId+"/user-id/"+userId;
     }
 
     @GetMapping("/delete/{id}/user/{userId}/confirmed")

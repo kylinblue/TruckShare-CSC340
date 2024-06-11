@@ -152,7 +152,7 @@
         <div class="col-sm-8">
             <!-- Example Card Layout for Listings -->
             <div class="card mb-3">
-                <div data-th-each="listing: ${listingList}" class="row g-0 p-1">
+                <div th:each="listing: ${listingList}" th:if="${listing.status} == 0 or ${user.userType}==2" class="row g-0 p-1">
                     <div class="col-md-4">
                         <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Listing Image">
                     </div>
@@ -160,9 +160,13 @@
                         <div class="card-body">
                             <p th:if="${user.userId} == ${listing.userId}"
                                class="card-text">This is your listing</p>
-                            <h5 class="card-title" data-th-text="${listing.title}"></h5>
-                            <p class="card-text" data-th-text="${listing.details}"></p>
-                            <p class="card-text" data-th-text="${listing.status}"></p>
+                            <h5 class="card-title" th:text="${listing.title}"></h5>
+                            <p class="card-text" th:text="${listing.details}"></p>
+                            <p class="card-text" th:switch="${listing.status}">
+                                <span th:case="'0'">Available</span>
+                                <span th:case="'1'">Reserved</span>
+                                <span th:case="'2'">Completed</span>
+                            </p>
                             <a th:object="${user}" th:unless="${user} == null"
                                th:href="@{'/listing/listing-id/' + ${listing.listingId} + '/user-id/' + ${user.userId}}"
                                class="btn btn-primary">View Details</a>
