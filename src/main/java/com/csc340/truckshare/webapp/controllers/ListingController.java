@@ -20,11 +20,11 @@ public class ListingController {
 
 
     @Autowired
-    ListingService listingService; // Autowired dependency  for listingService
+    ListingService listingService;
     @Autowired
-    UserService userService; // Autowired dependency  for userService
+    UserService userService;
     @Autowired
-    ConvService conversationService; // Autowired dependency for conversationService
+    ConvService conversationService;
 
     /*@GetMapping("/all")
     public String getAllListingForUser(Model model) {
@@ -39,13 +39,7 @@ public class ListingController {
     }*/
 
 
-    /**
-     * Get details of a particular listing by listing ID and user ID.
-     * @param listingId the ID of the listing
-     * @param userId the ID of the user
-     * @param model the model to hold attributes
-     * @return the listing detail view
-     */
+    //Get details of a particular listing by listing ID and user ID.
     @GetMapping("/listing-id/{listingId}/user-id/{userId}") // A particular listing
     public String findListingById(@PathVariable int listingId, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(listingId));
@@ -53,12 +47,7 @@ public class ListingController {
         return "listing-detail";
     }
 
-    /**
-     * Get all listings for a particular user by user ID.
-     * @param id the ID of the user
-     * @param model the model to hold attributes
-     * @return the user listings view
-     */
+    //Get all listings for a particular user by user ID.
     @GetMapping("/user-id/{id}") // All listings for a particular user
     public String findListingByUserId(@PathVariable int id, Model model){
         model.addAttribute("listings", listingService.queryByUserId(id));
@@ -66,12 +55,7 @@ public class ListingController {
         return "user-listings";
     }
 
-    /**
-     * Get all listings reserved by a particular user.
-     * @param id the ID of the user
-     * @param model the model to hold attributes
-     * @return the user reservations view
-     */
+    //Get all listings reserved by a particular user.
     @GetMapping("/reservations/user-id/{id}")
     public String findListingReservedByUserId(@PathVariable int id, Model model) {
         List<Listing> allListing = listingService.getAllListings();
@@ -86,12 +70,7 @@ public class ListingController {
         return userService.getUserByUserId(id).getUsername();
     }*/
 
-    /**
-     * Get the form for creating a new listing for a user.
-     * @param id the ID of the user
-     * @param model the model to hold attributes
-     * @return the listing form view
-     */
+    //Get the form for creating a new listing for a user.
     @GetMapping("/form/user/{id}")
     public String listingForm(@PathVariable int id, Model model)
     {
@@ -104,13 +83,7 @@ public class ListingController {
         return "listing-form";
     }
 
-    /**
-     * Get the form for editing an existing listing.
-     * @param id the ID of the listing
-     * @param userId the ID of the user
-     * @param model the model to hold attributes
-     * @return the listing form view
-     */
+    //Get the form for editing an existing listing.
     @GetMapping("/form/{id}/user/{userId}")
     public String existingForm(@PathVariable int id, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(id));
@@ -118,11 +91,8 @@ public class ListingController {
         return "listing-form";
     }
 
-    /**
-     * Save a new listing.
-     * @param listing the listing to be saved
-     * @return the redirect URL to the listing detail view
-     */
+    //Save a new listing.
+
     @PostMapping("/save")
     public String createListing(@ModelAttribute("listing") Listing listing){ //userId passed by front end
         listing.setUsername(
@@ -133,12 +103,7 @@ public class ListingController {
         return "redirect:/listing/listing-id/" + listing.getListingId() + "/user-id/" + listing.getUserId();
     }
 
-    /**
-     * Upload an image for a listing.
-     * @param image the image file to be uploaded
-     * @param listingId the ID of the listing
-     * @return the response entity indicating success or failure
-     */
+    //Upload an image for a listing.
     @PostMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image, @RequestParam("listingId") int listingId) {
         try {
@@ -151,23 +116,14 @@ public class ListingController {
         }
     }
 
-    /**
-     * Update an existing listing.
-     * @param listing the listing to be updated
-     * @return the redirect URL to the listing detail view
-     */
+    //Update an existing listing.
     @PostMapping("/update")
     public String updateListing(Listing listing){
         listingService.updateListing(listing);
         return "redirect:/listing/listing-id/" + listing.getListingId();
     }
 
-    /**
-     * Reserve a listing.
-     * @param listingId the ID of the listing
-     * @param userId the ID of the user
-     * @return the redirect URL to the listing detail view
-     */
+    //Reserve a listing.
     @GetMapping("/reserve/{listingId}/user-id/{userId}")
     public String reserveListing(@PathVariable int listingId, @PathVariable int userId) {
         Listing listing = listingService.getListingById(listingId);
@@ -176,12 +132,7 @@ public class ListingController {
         return "redirect:/listing/listing-id/"+listingId+"/user-id/"+userId;
     }
 
-    /**
-     * Mark a listing as complete.
-     * @param listingId the ID of the listing
-     * @param userId the ID of the user
-     * @return the redirect URL to the listing detail view
-     */
+    //Mark a listing as complete.
     @GetMapping("/complete/{listingId}/user-id/{userId}")
     public String completeListing(@PathVariable int listingId, @PathVariable int userId) {
         Listing listing = listingService.getListingById(listingId);
@@ -190,25 +141,14 @@ public class ListingController {
         return "redirect:/listing/listing-id/"+listingId+"/user-id/"+userId;
     }
 
-    /**
-     * Delete a listing.
-     * @param id the ID of the listing
-     * @param userId the ID of the user
-     * @return the redirect URL to the user's listings
-     */
+    //Delete a listing.
     @GetMapping("/delete/{id}/user/{userId}/confirmed")
     public String deleteListing(@PathVariable int id, @PathVariable int userId){
         listingService.deleteListing(id);
         return "redirect:/listing/user-id/{userId}";
     }
 
-    /**
-     * Confirm deletion of a listing.
-     * @param id the ID of the listing
-     * @param userId the ID of the user
-     * @param model the model to hold attributes
-     * @return the listing delete confirmation view
-     */
+    //Confirm deletion of a listing.
     @GetMapping("/delete/{id}/user/{userId}")
     public String deleteConfirmation(@PathVariable int id, @PathVariable int userId, Model model) {
         model.addAttribute("listing", listingService.getListingById(id));
