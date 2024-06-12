@@ -61,7 +61,6 @@ public class User {
         this.username = username;
     }
 
-    // plain text password!
     public void setPassword(String password) {
         this.password = password;
     }
@@ -94,8 +93,4 @@ public class User {
         isBanned = banned;
     }
 
-    // password hash, to be implemented
-    /*public PasswordHash getUserPasswordHash() {
-        return this.userPassword.hashCode();
-    }*/
 }

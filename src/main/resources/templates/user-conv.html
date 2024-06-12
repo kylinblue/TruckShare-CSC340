@@ -39,13 +39,13 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Recipient</th>
+            <th>Sender</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="conv : ${convList}">
-            <td th:text="${conv.targetUsername}"></td>
+            <td th:text="${conv.sourceUsername}"></td>
             <td>
                 <a class="btn btn-primary btn-sm" href="#" th:href="@{'/conv/conv-id/'+${conv.convId}+'/user/'+${user.userId}}">View Conversation</a>
                 <a class="btn btn-primary btn-sm" href="#" th:href="@{'/conv/delete/'+${conv.convId}+'/user/'+${user.userId}}">Delete Conversation</a>

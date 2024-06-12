@@ -26,19 +26,6 @@ public class ListingController {
     @Autowired
     ConvService conversationService;
 
-    /*@GetMapping("/all")
-    public String getAllListingForUser(Model model) {
-        model.addAttribute("allListing", listingService.getAllListings());
-        return "all-listings";
-    }*/
-
-    /*
-    @GetMapping("/userid/{userId}")
-    public List<Listing> findListingByUserId(@PathVariable int userId){
-        return listingService.queryByUserId(userId);
-    }*/
-
-
     //Get details of a particular listing by listing ID and user ID.
     @GetMapping("/listing-id/{listingId}/user-id/{userId}") // A particular listing
     public String findListingById(@PathVariable int listingId, @PathVariable int userId, Model model) {
@@ -64,11 +51,6 @@ public class ListingController {
         model.addAttribute("user", userService.getUserByUserId(id));
         return "user-reservations";
     }
-
-    /*@GetMapping("/get-getUsername/{id}")
-    public String getUsername(@PathVariable int id) {
-        return userService.getUserByUserId(id).getUsername();
-    }*/
 
     //Get the form for creating a new listing for a user.
     @GetMapping("/form/user/{id}")

@@ -26,4 +26,10 @@
 > Providers can also list their available trucks and tools on our platform, provide a description of the items for rent, 
 > pricing, liability and insurance requirement. \
 > \
-> SysAdmins provide moderation to the platform, remove inappropriate listings, and provide conflict resolutions. 
+> SysAdmins provide moderation to the platform, remove inappropriate listings, and provide conflict resolutions.
+> 
+
+## Prerequisites 
+> mySQL with empty database named truckshare \
+> Run once, then add/modify userID 0 in database to make Guest account functional \
+> Then other accounts can be created to start using this website/webapp

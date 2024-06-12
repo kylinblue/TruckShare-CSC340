@@ -112,10 +112,4 @@ public class ConvController {
         return "conv-delete-confirmation";
     }
 
-
-    /*public RedirectView deleteConversation(@RequestParam("convId") int id, RedirectAttributes attributes) {
-        conversationService.deleteConversation(id);
-        attributes.addFlashAttribute("message", "Conversation deleted successfully!");
-        return new RedirectView("/webapp/user/userid/");
-    }*/
 }

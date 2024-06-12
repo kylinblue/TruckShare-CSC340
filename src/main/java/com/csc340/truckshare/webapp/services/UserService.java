@@ -29,17 +29,4 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-    /*public void deleteUserById(int userId) {
-        if (this.listingRepository != null) {
-            List<Listing> listingToDelete = listingRepository.queryByUserId(userId);
-            for (Listing listing : listingToDelete) {
-                listingRepository.deleteById(listing.getListingId());
-            }
-            List<Conv> convsToDelete = convRepository.queryByUserId(userId);
-            for (Conv conv : convsToDelete) {
-                convRepository.deleteById(conv.getConvId());
-            }
-        }
-        userRepository.deleteById(userId);
-    }*/
 }

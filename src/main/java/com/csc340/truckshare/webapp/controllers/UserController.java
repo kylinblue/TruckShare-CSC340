@@ -86,19 +86,6 @@ public class UserController {
         return "user-homepage";
     }
 
-    /*@PostMapping("/auth")
-    public String userAuth(String getUsername, String password){
-        User user = userService.getUserByUserName(getUsername, password);
-        if (user == null)
-        {
-            return "auth-failure";
-        }
-        else if (user.getUserType()) {
-            return "admin-home";
-        }
-        else return "user-home";
-    }*/
-
     @GetMapping("/logout")
     public String userLogout(Model model){
         model.addAttribute("user", new User());
