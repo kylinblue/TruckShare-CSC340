@@ -33,4 +33,4 @@
 > mySQL with empty database named truckshare \
 > Run once, then add/modify userID 0 in database to make Guest account functional \
 > Then other accounts can be created to start using this website/webapp \
-> You can also unzip the truckshare_database.zip and overwrite existing truckshare database for a pre-populated example
+> You can also import the included truckshare.sql for a pre-populated example
